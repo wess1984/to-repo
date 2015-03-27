@@ -28,6 +28,19 @@ public class Hotel extends Produit implements Serializable {
 	public Hotel() {
 		super();
 	}   
+	
+	
+	public Hotel(String code, String libelle, String ville, String categorie,
+			List<Chambre> chambres) {
+		super();
+		this.code = code;
+		this.libelle = libelle;
+		this.ville = ville;
+		this.categorie = categorie;
+		this.chambres = chambres;
+	}
+
+
 	public String getCode() {
 		return this.code;
 	}
@@ -57,7 +70,12 @@ public class Hotel extends Produit implements Serializable {
 		this.categorie = categorie;
 	}
 	
-	@OneToMany
+	//@OneToMany
+	@ManyToMany
+	  @JoinTable(
+	      name="HOTEL_CHAMBRE",
+	      joinColumns={@JoinColumn(name="HOTEL_ID", referencedColumnName="id")},
+	      inverseJoinColumns={@JoinColumn(name="CHAMBRE_ID", referencedColumnName="numeroChambre")})
 	public List<Chambre> getChambres() {
 		return chambres;
 	}

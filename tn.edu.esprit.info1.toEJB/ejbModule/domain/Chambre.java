@@ -3,6 +3,7 @@ package domain;
 import java.io.Serializable;
 import java.lang.Integer;
 import java.lang.String;
+
 import javax.persistence.*;
 
 /**
@@ -14,9 +15,17 @@ import javax.persistence.*;
 public class Chambre implements Serializable {
 
 	
+	public Chambre(String type, Integer capacite) {
+		super();
+		
+		this.type = type;
+		this.capacite = capacite;
+	}
+
 	private Integer numeroChambre;
 	private String type;
 	private Integer capacite;
+
 	private static final long serialVersionUID = 1L;
 
 	public Chambre() {
@@ -24,6 +33,7 @@ public class Chambre implements Serializable {
 	}   
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer getNumeroChambre() {
 		return this.numeroChambre;
 	}
