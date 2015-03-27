@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title><ui:insert name="pageTitle" /></title>
+	<h:outputStylesheet library="css" name="application.css" />
+	<link rel="shortcut icon" type="image/x-con"
+		href="#{request.contextPath}/resources/img/favicon.ico" />
+	<link rel="Stylesheet" href="/tn.edu.esprit.info1.toWeb/template/css/bootstrap.css"/>
+    <link rel="Stylesheet" href="/tn.edu.esprit.info1.toWeb/template/css/layout.css"/>
+    <link rel="Stylesheet" href="/tn.edu.esprit.info1.toWeb/template/css/ie.css"/>
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+		
+			 <script type="text/javascript">
+		$(document).ready(function(){ 
+	      	  $(".tablesorter").tablesorter(); 
+	          
+	   	 });
+		$(document).ready(function() {
+			$(".tab_content").hide(); //Hide all content
+			$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+			$(".tab_content:first").show(); //Show first tab content
+		
+			//On Click Event
+			$("ul.tabs li").click(function() {
+				$("ul.tabs li").removeClass("active"); //Remove any "active" class
+				$(this).addClass("active"); //Add "active" class to selected tab
+				$(".tab_content").hide(); //Hide all tab content
+				return false;
+				var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+				$(activeTab).fadeIn(); //Fade in the active ID content
+				return false;
+			});
+		});
+    </script>
+    <script type="text/javascript">
+	    $(function(){
+	        $('.column').equalHeight();              
+	    });
+	</script>
+</h:head>
+<h:body>
+	<ui:include src="/WEB-INF/entete.xhtml" />
+	<ui:include src="/WEB-INF/left.xhtml" />
+		
+	<div id="header" style="height: 50px;"><ui:insert name="pageHeader" /></div>
+	<section id="main" class="column" >  
+	<ui:include src="/WEB-INF/content.xhtml" />          
+		<div class="spacer"></div>
+	</section>
+		
+</h:body>
+</html>
