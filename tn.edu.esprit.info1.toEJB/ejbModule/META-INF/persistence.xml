@@ -3,7 +3,7 @@
 	<persistence-unit name="tn.edu.esprit.info1.toEJB">
 	<jta-data-source>java:/toDS</jta-data-source>
 		<class>domain.Admin</class>
-		<class>domain.Chambre</class>
+		<class>domain.CategorieChambre</class>
 		<class>domain.Client</class>
 		<class>domain.Hotel</class>
 		<class>domain.Produit</class>

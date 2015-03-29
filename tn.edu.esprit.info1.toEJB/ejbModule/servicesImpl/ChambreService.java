@@ -8,7 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import domain.Chambre;
+import domain.CategorieChambre;
+
 import domain.Produit;
 import services.interfaces.ChambreServiceLocal;
 
@@ -27,23 +28,25 @@ public class ChambreService implements ChambreServiceLocal {
         // TODO Auto-generated constructor stub
     }
 
-    @Override
-	public Boolean addChambre(Chambre chambre) {
+   
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CategorieChambre> getAllCategorieChambre() {
+		
+		return entityManager.createQuery("select c from CategorieChambre c").getResultList();
+		 
+	}
+
+	@Override
+	public Boolean addCategorieChambre(CategorieChambre categorieChambre) {
+		// TODO Auto-generated method stub
 		Boolean b = false;
 		try {
-			entityManager.persist(chambre);
+			entityManager.persist(categorieChambre);
 			b = true;
 		} catch (Exception e) {
 			System.out.println("insertion errors ...");
 		}
 		return b;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Chambre> getAll() {
-		
-		return entityManager.createQuery("select c from Chambre c").getResultList();
-		 
 	}
 }

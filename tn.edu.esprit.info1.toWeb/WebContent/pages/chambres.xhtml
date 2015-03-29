@@ -5,17 +5,15 @@
 	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
 <ui:define name="entete">Chambres</ui:define>
 	<ui:define name="pageTitle">Chambres</ui:define>
-	<ui:define name="pageHeader"></ui:define>
+	<ui:define name="pageHeader">*****</ui:define>
 	<ui:define name="pageContent">		
-		<p:dataTable var="chambre" value="#{chambreBean.chambres}">
+		<p:dataTable var="chambre" value="#{chambreBean.categorieChambres}">
 		    <p:column headerText="Id">
-		        <h:outputText value="#{chambre.numeroChambre}" />
+		        <h:outputText value="#{chambre.id}" />
 		    </p:column>
-		    <p:column headerText="Libellé">
-		        <h:outputText value="#{chambre.type}" />
-		    </p:column>
-		      <p:column headerText="Capacité">
-		        <h:outputText value="#{chambre.capacite}" />
+		   
+		      <p:column headerText="Libellé">
+		        <h:outputText value="#{chambre.libelle}" />
 		    </p:column>
 		</p:dataTable>
 	</ui:define>

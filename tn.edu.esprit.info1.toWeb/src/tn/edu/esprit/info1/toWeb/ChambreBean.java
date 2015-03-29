@@ -10,24 +10,25 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 
 import services.interfaces.ChambreServiceLocal;
-import domain.Chambre;
+import domain.CategorieChambre;
+
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class ChambreBean {
 
-	List<Chambre> chambres = new LinkedList<>();
+	List<CategorieChambre> categorieChambres = new LinkedList<>();
 	
 	@EJB
 	ChambreServiceLocal chambreServiceLocal;
 
-	public List<Chambre> getChambres() {
-		chambres = chambreServiceLocal.getAll();
-		return chambres;
+	public List<CategorieChambre> getCategorieChambres() {
+		categorieChambres = chambreServiceLocal.getAllCategorieChambre();
+		return categorieChambres;
 	}
 
-	public void setChambres(List<Chambre> chambres) {
-		this.chambres = chambres;
+	public void setCategorieChambres(List<CategorieChambre> categorieChambres) {
+		this.categorieChambres = categorieChambres;
 	}
 	
 	

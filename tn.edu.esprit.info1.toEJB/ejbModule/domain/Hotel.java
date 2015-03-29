@@ -20,24 +20,23 @@ public class Hotel extends Produit implements Serializable {
 	private String code;
 	private String libelle;
 	private String ville;
-	private String categorie;
+	private String categorie; // 2**, 3***
 	private static final long serialVersionUID = 1L;
 	
-	private List<Chambre> chambres;
+	private List<CategorieChambreProduit> categorieChambreProduits;
 
 	public Hotel() {
 		super();
 	}   
 	
 	
-	public Hotel(String code, String libelle, String ville, String categorie,
-			List<Chambre> chambres) {
+	public Hotel(String code, String libelle, String ville, String categorie,List<CategorieChambreProduit> categorieChambreProduits){
 		super();
 		this.code = code;
 		this.libelle = libelle;
 		this.ville = ville;
 		this.categorie = categorie;
-		this.chambres = chambres;
+		this.categorieChambreProduits=categorieChambreProduits;
 	}
 
 
@@ -69,18 +68,18 @@ public class Hotel extends Produit implements Serializable {
 	public void setCategorie(String categorie) {
 		this.categorie = categorie;
 	}
+
+
+	@OneToMany(mappedBy="produit")
+	public List<CategorieChambreProduit> getCategorieChambreProduits() {
+		return categorieChambreProduits;
+	}
+
+
+	public void setCategorieChambreProduits(List<CategorieChambreProduit> categorieChambreProduits) {
+		this.categorieChambreProduits = categorieChambreProduits;
+	}
 	
-	//@OneToMany
-	@ManyToMany
-	  @JoinTable(
-	      name="HOTEL_CHAMBRE",
-	      joinColumns={@JoinColumn(name="HOTEL_ID", referencedColumnName="id")},
-	      inverseJoinColumns={@JoinColumn(name="CHAMBRE_ID", referencedColumnName="numeroChambre")})
-	public List<Chambre> getChambres() {
-		return chambres;
-	}
-	public void setChambres(List<Chambre> chambres) {
-		this.chambres = chambres;
-	}
+	
    
 }

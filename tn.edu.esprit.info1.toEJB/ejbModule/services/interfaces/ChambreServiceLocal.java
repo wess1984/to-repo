@@ -4,10 +4,11 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import domain.Chambre;
+import domain.CategorieChambre;
+
 
 @Local
 public interface ChambreServiceLocal {
-	Boolean addChambre(Chambre chambre);
-	List<Chambre> getAll();
+	Boolean addCategorieChambre(CategorieChambre categorieChambre);
+	List<CategorieChambre> getAllCategorieChambre();
 }
