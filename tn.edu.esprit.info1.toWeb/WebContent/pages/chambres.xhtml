@@ -75,29 +75,8 @@
 			<p:column headerText="Libellé" sortBy="#{chambre.libelle}">
 				<h:outputText value="#{chambre.libelle}" />
 			</p:column>
-			<f:facet name="footer">
-				<p:commandButton value="View"
-					oncomplete="PF('employeeDialog').show()"
-					image="ui-icon ui-icon-search" />
-
-			</f:facet>
-
+			
 		</p:dataTable>
-		<p:dialog header="Employee Detail" widgetVar="employeeDialog"
-			resizable="false" width="200" showEffect="explode"
-			hideEffect="explode">
-
-			<h:panelGrid id="display" columns="2" cellpadding="4">
-
-
-
-				<h:outputText value="Name:" />
-				<h:outputText value="#{chambreBean.categorieChambre.libelle}" />
-
-				<h:outputText value="Last Name:" />
-				<h:outputText value="#{chambreBean.categorieChambre.libelle}" />
-
-			</h:panelGrid>
-		</p:dialog>
+		
 	</ui:define>
 </ui:composition>
