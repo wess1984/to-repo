@@ -415,7 +415,11 @@ margin-top: 20%;
 
 /* Main Content */
 
-
+#header{
+	bottom: 0;
+    left: 0;
+    position: relative;
+}
 section#main {
 width: 77%;
 min-height: 500px;

@@ -5,14 +5,33 @@
 	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
 <ui:define name="entete">Chambres</ui:define>
 	<ui:define name="pageTitle">Chambres</ui:define>
-	<ui:define name="pageHeader">*****</ui:define>
+	<ui:define name="pageHeader">
+<h:form>     
+    <p:growl id="messages" showDetail="true" /> 
+    <p:toolbar>
+        <f:facet name="left">
+            <p:commandButton type="button" value="New" icon="ui-icon-document" />
+ 
+            <p:commandButton type="button" value="Open" icon="ui-icon-folder-open" />
+ 
+            <span class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+            </span>
+ 
+            <p:commandButton type="button" title="Save" icon="ui-icon-disk" />
+            <p:commandButton type="button" title="Delete" icon="ui-icon-trash" />
+            <p:commandButton type="button" title="Print" icon="ui-icon-print" />
+        </f:facet>
+    </p:toolbar>
+</h:form>
+	
+	</ui:define>
 	<ui:define name="pageContent">		
-		<p:dataTable var="chambre" value="#{chambreBean.categorieChambres}">
-		    <p:column headerText="Id">
+		<p:dataTable var="chambre" value="#{chambreBean.categoriesChambre}" selectionMode="single" selection="#{chambreBean.selectedChambre}" rowKey="#{chambre.id}">
+		    <p:column headerText="Id"  style="width:20px;">
 		        <h:outputText value="#{chambre.id}" />
 		    </p:column>
-		   
-		      <p:column headerText="Libellé">
+		      <p:column headerText="Libellé" sortBy="#{chambre.libelle}">
 		        <h:outputText value="#{chambre.libelle}" />
 		    </p:column>
 		</p:dataTable>
