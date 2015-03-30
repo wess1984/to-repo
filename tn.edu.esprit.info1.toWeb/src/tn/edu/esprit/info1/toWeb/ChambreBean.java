@@ -4,22 +4,35 @@ package tn.edu.esprit.info1.toWeb;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.component.dialog.Dialog;
+import org.primefaces.component.poll.Poll;
 
 import services.interfaces.ChambreServiceLocal;
 import domain.CategorieChambre;
 
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class ChambreBean {
 
 		
 	List<CategorieChambre> categoriesChambre = new LinkedList<>();
-	CategorieChambre selectedChambre;
+	CategorieChambre categorieChambre ;
+	
+	@PostConstruct
+	public void init(){
+	 categorieChambre	= new CategorieChambre();
+	}
 	
 	@EJB
 	ChambreServiceLocal chambreServiceLocal;
@@ -34,12 +47,13 @@ public class ChambreBean {
 	}
 		
     
-	public CategorieChambre getSelectedChambre() {
-		return selectedChambre;
+	public CategorieChambre getCategorieChambre() {
+		System.out.println(this.categorieChambre.getLibelle());
+		return this.categorieChambre;
 	}
 
-	public void setSelectedChambre(CategorieChambre categorieChambre) {
-		this.selectedChambre = categorieChambre;
+	public void setCategorieChambre(CategorieChambre categorieChambre) {
+		this.categorieChambre = categorieChambre;
 	}
 
 	public ChambreServiceLocal getChambreServiceLocal() {
@@ -50,5 +64,8 @@ public class ChambreBean {
 		this.chambreServiceLocal = chambreServiceLocal;
 	}
 	
+	public void doAddCategorieChambre(){
+		chambreServiceLocal.addCategorieChambre(categorieChambre);
+	}
     
 }
