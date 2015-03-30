@@ -19,28 +19,14 @@ public class Vol extends Produit implements Serializable {
 	private String numeroVol;
 	private Date dateDepart;
 	private Date dateArrivee;
-	private Aeroport departAeroport;
-	private Aeroport arriveeAeroport;
+	private String departAeroport;
+	private String arriveeAeroport;
 	private Integer capacite;
 	private static final long serialVersionUID = 1L;
 
 	public Vol() {
 		super();
 	}   
-	
-	
-	public Vol(String numeroVol, Date dateDepart, Date dateArrivee,
-			Aeroport departAeroport, Aeroport arriveeAeroport, Integer capacite) {
-		super();
-		this.numeroVol = numeroVol;
-		this.dateDepart = dateDepart;
-		this.dateArrivee = dateArrivee;
-		this.departAeroport = departAeroport;
-		this.arriveeAeroport = arriveeAeroport;
-		this.capacite = capacite;
-	}
-
-
 	public String getNumeroVol() {
 		return this.numeroVol;
 	}
@@ -48,7 +34,6 @@ public class Vol extends Produit implements Serializable {
 	public void setNumeroVol(String numeroVol) {
 		this.numeroVol = numeroVol;
 	}   
-	
 	public Date getDateDepart() {
 		return this.dateDepart;
 	}
@@ -63,22 +48,18 @@ public class Vol extends Produit implements Serializable {
 	public void setDateArrivee(Date dateArrivee) {
 		this.dateArrivee = dateArrivee;
 	}   
-	
-	@OneToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	public Aeroport getDepartAeroport() {
+	public String getDepartAeroport() {
 		return this.departAeroport;
 	}
 
-	public void setDepartAeroport(Aeroport departAeroport) {
+	public void setDepartAeroport(String departAeroport) {
 		this.departAeroport = departAeroport;
 	}   
-	
-	@OneToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	public Aeroport getArriveeAeroport() {
+	public String getArriveeAeroport() {
 		return this.arriveeAeroport;
 	}
 
-	public void setArriveeAeroport(Aeroport arriveeAeroport) {
+	public void setArriveeAeroport(String arriveeAeroport) {
 		this.arriveeAeroport = arriveeAeroport;
 	}   
 	public Integer getCapacite() {
