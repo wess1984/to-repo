@@ -17,47 +17,70 @@ import domain.Vol;
 @RequestScoped
 public class VolBean {
 
-	//Model
-	public List<Vol> vols = new ArrayList<>();
-	public List<Aeroport> aeroports = new ArrayList<>();
-	private Vol vol = new Vol();
+		//Model
+		public List<Vol> vols = new ArrayList<>();
+		public List<Aeroport> aeroports = new ArrayList<>();
+		private Vol vol = new Vol();
+		private String selectedAeroportDepartId=null;
+		private String selectedAeroportArriveeId=null;
+		// Proxy
+		@EJB
+		private VolServiceLocal volServiceLocal;
 
-	// Proxy
-	@EJB
-	private VolServiceLocal volServiceLocal;
-
-	// Methods
-	public String doAddVol(){
-		volServiceLocal.addVol(vol);
-		return "";
-	}
-	
-	public List<Vol> getVols() {
-		vols=volServiceLocal.getVols();
-		return vols;
-	}
-
-	public void setVols(List<Vol> vols) {
-		this.vols = vols;
-	}
-
-	public Vol getVol() {
-		return vol;
-	}
-
-	public void setVol(Vol vol) {
-		this.vol = vol;
-	}
-
-	public List<Aeroport> getAeroports() {
-		aeroports = volServiceLocal.getAeroports();
 		
-		return aeroports;
-	}
+		
+		// Methods
+		public String doAddVol(){
+			Aeroport depart = volServiceLocal.findAeroportById(Integer.parseInt(this.getSelectedAeroportDepartId()));
+			Aeroport arrivee = volServiceLocal.findAeroportById(Integer.parseInt(this.getSelectedAeroportArriveeId()));
+			vol.setDepartAeroport(depart);
+			vol.setArriveeAeroport(arrivee);
+			
+			volServiceLocal.addVol(vol);
+			return "";
+		}
+		
+		public List<Vol> getVols() {
+			vols=volServiceLocal.getVols();
+			return vols;
+		}
 
-	public void setAeroports(List<Aeroport> aeroports) {
-		this.aeroports = aeroports;
-	}
+		public void setVols(List<Vol> vols) {
+			this.vols = vols;
+		}
 
+		public Vol getVol() {
+			return vol;
+		}
+
+		public void setVol(Vol vol) {
+			this.vol = vol;
+		}
+
+		public List<Aeroport> getAeroports() {
+			aeroports = volServiceLocal.getAeroports();
+			
+			return aeroports;
+		}
+
+		public void setAeroports(List<Aeroport> aeroports) {
+			this.aeroports = aeroports;
+		}
+
+		public String getSelectedAeroportDepartId() {
+			return selectedAeroportDepartId;
+		}
+
+		public void setSelectedAeroportDepartId(String selectedAeroportDepartId) {
+			this.selectedAeroportDepartId = selectedAeroportDepartId;
+		}
+
+		public String getSelectedAeroportArriveeId() {
+			return selectedAeroportArriveeId;
+		}
+
+		public void setSelectedAeroportArriveeId(String selectedAeroportArriveeId) {
+			this.selectedAeroportArriveeId = selectedAeroportArriveeId;
+		}
 
 }
