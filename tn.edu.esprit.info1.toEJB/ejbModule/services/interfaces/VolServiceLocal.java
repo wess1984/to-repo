@@ -14,4 +14,5 @@ public interface VolServiceLocal {
 	
 	public List<Aeroport> getAeroports();
 	public Aeroport findAeroportById(Integer id);
+	public Vol findVolById(Integer id);
 }

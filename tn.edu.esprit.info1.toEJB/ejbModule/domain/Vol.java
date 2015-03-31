@@ -64,7 +64,7 @@ public class Vol extends Produit implements Serializable {
 		this.dateArrivee = dateArrivee;
 	}   
 	
-	@OneToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
+	@OneToOne
 	public Aeroport getDepartAeroport() {
 		return this.departAeroport;
 	}
@@ -73,7 +73,7 @@ public class Vol extends Produit implements Serializable {
 		this.departAeroport = departAeroport;
 	}   
 	
-	@OneToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
+	@OneToOne
 	public Aeroport getArriveeAeroport() {
 		return this.arriveeAeroport;
 	}

@@ -61,4 +61,9 @@ public class VolService implements VolServiceRemote, VolServiceLocal {
 		return entityManager.find(Aeroport.class, id);
 	}
 
+	@Override
+	public Vol findVolById(Integer id) {
+		return entityManager.find(Vol.class, id);
+	}
+
 }

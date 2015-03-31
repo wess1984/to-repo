@@ -3,69 +3,135 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
-<ui:define name="entete">Vols</ui:define>
+	<ui:define name="entete">Vols</ui:define>
 	<ui:define name="pageTitle">Vols</ui:define>
-	<ui:define name="pageHeader"></ui:define>
-	<ui:define name="pageContent">		
-	
-		<p:dataTable id="volList" var="vol1" value="#{volBean.vols}">
-  	        <p:column headerText="NumÃ©ro de Vol">
-		        <h:outputText value="#{vol1.numeroVol}" />
-		    </p:column>
-		    <p:column headerText="DÃ©signation">
-		        <h:outputText value="#{vol1.designation}" />
-		    </p:column>
-		    <p:column headerText="Date DÃ©part">
-		        <h:outputText value="#{vol1.dateDepart}" />
-		    </p:column>
-		    <p:column headerText="Date ArrivÃ©e">
-		        <h:outputText value="#{vol1.dateArrivee}" />
-		    </p:column>
-		    <p:column headerText="DÃ©part">
-		        <h:outputText value="#{vol1.departAeroport}" />
-		    </p:column>
-		    <p:column headerText="ArrivÃ©e">
-		        <h:outputText value="#{vol1.arriveeAeroport}" />
-		    </p:column>
-		    <p:column headerText="Nombre de place">
-		        <h:outputText value="#{vol1.capacite}" />
-		    </p:column>
-		</p:dataTable>
-		<br/>
-		
-		<!--<p:dialog header="Creer Vol" widgetVar="dlg1" minHeight="40">-->
-    		<h:form>
-    		<h:panelGrid columns="2">
-    			<h:outputText value="Numero du vol" />
-    			<p:inputText value="#{volBean.vol.numeroVol}" />
-    			<h:outputText value="Designation" />
-    			<p:inputText value="#{volBean.vol.designation}" />
-    			<h:outputText value="Date Depart" />
-    			<p:calendar value="#{volBean.vol.dateDepart}" />
-    			<h:outputText value="Date Arrivee" />
-    			<p:calendar value="#{volBean.vol.dateArrivee}" />
-    			<h:outputText value="Depart" />
-    			
-    			 <p:selectOneMenu id="departAeroport" value="#{volBean.vol.departAeroport}" style="width:250px">
-                <f:selectItem itemLabel="Selectionner Aeroport" itemValue="" noSelectionOption="true" />
-                <f:selectItems value="#{volBean.aeroports}" />
-            </p:selectOneMenu>
-            <br/>
-     			<h:outputText value="Arrivee" />
-    			 <p:selectOneMenu id="arriveeAeroport" value="#{volBean.vol.arriveeAeroport}" style="width:250px">
-                <f:selectItem itemLabel="SÃ©lectionner Aeroport" itemValue="" noSelectionOption="true" />
-                <f:selectItems value="#{volBean.aeroports}" />
-            </p:selectOneMenu>
-    			<h:outputText value="Nombre de Place" />
-    			<p:inputText value="#{volBean.aeroports.size()}" />
-  				</h:panelGrid>
-      			<h:commandButton action="#{volBean.doAddVol}" value="Valider" />
-    		</h:form>
-		<!-- </p:dialog> -->
-		<!-- <p:commandButton value="CrÃ©er Vol" type="button" onclick="PF('dlg1').show()" />  -->
-		
-		
+	<ui:define name="pageHeader">
+		<h2>Gestion des Vols</h2>
 
-		
+	</ui:define>
+	<ui:define name="pageContent">
+
+		<p:growl id="messages" showDetail="true" />
+
+
+		<h:form id="form">
+			<p:toolbar>
+				<f:facet name="left">
+					<p:commandButton process="volList" value="Ajouter" icon="ui-icon-plus"
+						oncomplete="PF('dialog-insert').show();" />
+					<p:commandButton process="volList" value="Modifier"
+						icon=" ui-icon-folder-open" update=":form:volDetail"
+						oncomplete="PF('dialog-update').show();" />
+					<p:commandButton type="button" value="Supprimer"
+						icon="ui-icon-trash" />
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" /></span>
+				</f:facet>
+			</p:toolbar>
+			<br />
+			<p:dialog header="Ajouter Vol" widgetVar="dialog-insert"
+				id="dialog-insert" modal="true" height="auto" width="600">
+				<h:panelGrid columns="2">
+					<h:outputText value="Numero du vol" />
+					<p:inputText value="#{volBean.vol.numeroVol}" />
+					<h:outputText value="Designation" />
+					<p:inputText value="#{volBean.vol.designation}" />
+					<h:outputText value="Date Depart" />
+					<p:calendar value="#{volBean.vol.dateDepart}" />
+					<h:outputText value="Date Arrivee" />
+					<p:calendar value="#{volBean.vol.dateArrivee}" />
+					<h:outputText value="Depart" />
+					<h:selectOneMenu id="departAeroport"
+						value="#{volBean.selectedAeroportDepartId}" style="width:250px">
+						<f:selectItems value="#{volBean.aeroports}" var="aeroport1"
+							itemValue="#{aeroport1.id}" itemLabel="#{aeroport1.nom}" />
+					</h:selectOneMenu>
+					<h:outputText value="Arrivee" />
+					<h:selectOneMenu id="arriveeAeroport"
+						value="#{volBean.selectedAeroportArriveeId}" style="width:250px">
+						<f:selectItems value="#{volBean.aeroports}" var="aeroport2"
+							itemValue="#{aeroport2.id}" itemLabel="#{aeroport2.nom}" />
+					</h:selectOneMenu>
+					<h:outputText value="Nombre de Place" />
+					<p:inputText value="#{volBean.vol.capacite}" />
+					<p:commandButton action="#{volBean.doAddVol()}"
+						onclick="PF('dialog-insert').hide();" value="Enregistrer"
+						icon="ui-icon-disk" update=":form:volList" />
+					<p:commandButton value="Annuler" icon="ui-icon-disk"
+						onclick="PF('dialog-insert').hide();" />
+				</h:panelGrid>
+
+			</p:dialog>
+			<p:dialog header="Modifier Vol" widgetVar="dialog-update"
+				id="dialog-update" modal="true" height="auto" width="600">
+
+				<p:outputPanel id="volDetail" style="text-align:center;">
+					<h:panelGrid columns="2" columnClasses="label,value">
+						<h:outputText value="Numero du vol" />
+						<p:inputText value="#{volBean.selectedVol.numeroVol}" />
+						<h:outputText value="Designation" />
+						<p:inputText value="#{volBean.selectedVol.designation}" />
+						<h:outputText value="Date Depart" />
+						<p:calendar value="#{volBean.selectedVol.dateDepart}" />
+						<h:outputText value="Date Arrivee" />
+						<p:calendar value="#{volBean.selectedVol.dateArrivee}" />
+						<h:outputText value="Depart" />
+						<h:selectOneMenu id="selectedDepartAeroport"
+							value="#{volBean.selectedAeroportDepartId}" style="width:250px">
+							<f:selectItems value="#{volBean.aeroports}" var="aeroport1"
+								itemValue="#{aeroport1.id}" itemLabel="#{aeroport1.nom}" />
+						</h:selectOneMenu>
+						<h:outputText value="Arrivee" />
+						<h:selectOneMenu id="selectedArriveeAeroport"
+							value="#{volBean.selectedAeroportArriveeId}" style="width:250px">
+							<f:selectItems value="#{volBean.aeroports}" var="aeroport2"
+								itemValue="#{aeroport2.id}" itemLabel="#{aeroport2.nom}" />
+						</h:selectOneMenu>
+						<h:outputText value="Nombre de Place" />
+						<p:inputText value="#{volBean.selectedVol.capacite}" />
+
+
+						<p:commandButton action="#{volBean.doAddVol()}"
+							onclick="PF('dialog-update').hide();" value="Enregistrer"
+							icon="ui-icon-disk" update=":form:volList" />
+						<p:commandButton value="Annuler" icon="ui-icon-disk"
+							onclick="PF('dialog-update').hide();" />
+					</h:panelGrid>
+				</p:outputPanel>
+
+			</p:dialog>
+
+
+
+			<p:dataTable id="volList" var="vol" value="#{volBean.vols}"
+				selectionMode="single"  selection="#{volBean.selectedVol}"
+				rowKey="#{vol.numeroVol}">
+				<p:column headerText="Numero de Vol">
+					<h:outputText value="#{vol.numeroVol}" />
+				</p:column>
+				<p:column headerText="Designation">
+					<h:outputText value="#{vol.designation}" />
+				</p:column>
+				<p:column headerText="Date Depart">
+					<h:outputText value="#{vol.dateDepart}" />
+				</p:column>
+				<p:column headerText="Date Arrivee">
+					<h:outputText value="#{vol.dateArrivee}" />
+				</p:column>
+				<p:column headerText="Depart">
+					<h:outputText value="#{vol.departAeroport.nom}" />
+				</p:column>
+				<p:column headerText="Arrivee">
+					<h:outputText value="#{vol.arriveeAeroport.nom}" />
+				</p:column>
+				<p:column headerText="Nombre de place">
+					<h:outputText value="#{vol.capacite}" />
+				</p:column>
+
+
+
+			</p:dataTable>
+
+		</h:form>
 	</ui:define>
 </ui:composition>
