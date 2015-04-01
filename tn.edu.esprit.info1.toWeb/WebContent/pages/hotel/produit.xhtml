@@ -1,0 +1,50 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" >
+	
+     <p:toolbar>
+		<f:facet name="right">		
+			<p:commandButton process="hotelList" value="Ajouter"  icon="ui-icon-plus" oncomplete="PF('insertDialog').show()" />	
+			<p:commandButton process="hotelList" value="Modifier" icon="ui-icon-pencil"  />
+			<p:commandButton value="Supprimer" icon="ui-icon-close" />
+		</f:facet>
+	</p:toolbar>
+    
+    <p:dataTable id="hotelList" var="hotel" value="#{hotelBean.hotels}" >
+    	<p:column headerText="Id" style="width:30px;text-align:center">
+		            <h:outputText value="#{hotel.id}" />
+        </p:column>
+        <p:column headerText="Code" >
+		            <h:outputText value="#{hotel.code}" />
+        </p:column>
+        <p:column headerText="Libellé" >
+		            <h:outputText value="#{hotel.libelle}" />
+        </p:column>        
+        <p:column headerText="Ville" >
+		            <h:outputText value="#{hotel.ville}" />
+        </p:column>
+        <p:column headerText="Catégorie" >
+		            <h:outputText value="#{hotel.categorie}" />
+        </p:column>
+    </p:dataTable> 
+    
+    <p:dialog header="Hotel produit" widgetVar="insertDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+		       <h:form id="insert-form">		       			
+					<h:panelGrid columns="2">						
+						<h:outputText value="Id" />
+						<h:inputText value="#{hotelBean.selectedHotel.id}" style="width:30px" disabled="true" />
+						<h:outputText value="Code" />
+						<h:inputText value="#{hotelBean.selectedHotel.code}" style="width:55px" />
+						<h:outputText value="Libellé" />
+						<h:inputText value="#{hotelBean.selectedHotel.libelle}" style="width:450px" />
+						<h:outputText value="Ville" />
+						<h:inputText value="#{hotelBean.selectedHotel.ville}" style="width:450px" />
+						<p:commandButton value="Enregistrer" icon="ui-icon-disk" update="@all"  action="#{hotelBean.doAddHotel}"  />
+						<p:commandButton value="Annuler" icon="ui-icon-disk"  />
+					</h:panelGrid>
+				</h:form>
+   </p:dialog>		    
+</ui:composition>

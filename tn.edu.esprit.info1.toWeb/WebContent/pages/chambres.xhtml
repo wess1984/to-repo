@@ -7,7 +7,7 @@
 	<ui:define name="pageTitle">Chambres</ui:define>
 	<ui:define name="pageHeader">
 		<h:form id="form-header">
-			<h1>Catégories de chambre</h1>
+			<h3>Catégories de chambre</h3>
 		</h:form>			
 	</ui:define>
 	<ui:define name="pageContent">	
@@ -18,10 +18,10 @@
 	    	selectionMode="single" value="#{chambreBean.categoriesChambre}" selection="#{chambreBean.selectedCategorieChambre}" rowKey="#{chambre.id}">
 		        <f:facet name="header">
 		            <p:toolbar>
-						<f:facet name="left">		
+						<f:facet name="right">		
 							<p:commandButton process="chambreList" update=":insert-form"  value="Ajouter"  icon="ui-icon-plus" actionListener="#{chambreBean.resetInput}"	oncomplete="PF('insertDialog').show()" />	
-							<p:commandButton process="chambreList" update=":update-form"  value="Modifier" icon="ui-icon-search"  oncomplete="PF('updateDialog').show()" />
-							<p:commandButton update=":form:chambreList" value="Supprimer" icon="ui-icon-search" actionListener="#{chambreBean.doDeleteCategorieChambre}"  >
+							<p:commandButton process="chambreList" update=":update-form"  value="Modifier" icon="ui-icon-pencil"  oncomplete="PF('updateDialog').show()" />
+							<p:commandButton update=":form:chambreList" value="Supprimer" icon="ui-icon-close" actionListener="#{chambreBean.doDeleteCategorieChambre}"  >
 								 <p:confirm header="Confirmation" message="Voulez vous vraiment continuer ?" icon="ui-icon-alert" />
 							</p:commandButton>
 							<span class="ui-separator"> 
