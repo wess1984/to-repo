@@ -6,11 +6,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import domain.CategorieChambre;
-
-import domain.Produit;
 import services.interfaces.ChambreServiceLocal;
 
 /**
@@ -46,6 +43,34 @@ public class ChambreService implements ChambreServiceLocal {
 			b = true;
 		} catch (Exception e) {
 			System.out.println("insertion errors ...");
+		}
+		return b;
+	}
+
+
+	@Override
+	public Boolean updateCategorieVhambre(CategorieChambre categorieChambre) {
+		Boolean b = false;
+		try {
+			entityManager.merge(categorieChambre);
+			b = true;
+		} catch (Exception e) {
+			System.err.println("update errors ...");
+		}
+		return b;
+	}
+
+
+	@Override
+	public Boolean deleteCategorieChambre(CategorieChambre categorieChambre) {
+		Boolean b = false;
+		try {
+					
+			entityManager.remove(entityManager.find(CategorieChambre.class, categorieChambre.getId()));
+			b = true;
+		} catch (Exception e) {
+			System.err.println(e);
+			System.err.println("delete errors ...");
 		}
 		return b;
 	}

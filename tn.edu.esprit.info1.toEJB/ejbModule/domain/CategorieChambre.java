@@ -55,6 +55,11 @@ public class CategorieChambre implements Serializable {
 
 	public void setCategorieChambreProduits(List<CategorieChambreProduit> categorieChambreProduits) {
 		this.categorieChambreProduits = categorieChambreProduits;
+	}
+
+	@Override
+	public String toString() {
+		return "CategorieChambre [id=" + id + ", libelle=" + libelle + "]";
 	}   
 	
 	
