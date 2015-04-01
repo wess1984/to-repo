@@ -42,6 +42,7 @@ public class VolBean implements Serializable {
 			volServiceLocal.addVol(vol);
 			this.setVol(null);
 			this.setSelectedVol(null);
+
 			return "";
 		}
 		
@@ -99,5 +100,6 @@ public class VolBean implements Serializable {
 		public void setSelectedVol(Vol selectedVol) {
 			this.selectedVol = selectedVol;
 		}
+
 
 }

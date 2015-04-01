@@ -12,11 +12,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 
-
-
-
-
-
 import domain.Aeroport;
 import domain.CategorieChambre;
 import domain.CategorieChambreProduit;

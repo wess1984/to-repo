@@ -6,77 +6,69 @@
 	<ui:define name="entete">Chambres</ui:define>
 	<ui:define name="pageTitle">Chambres</ui:define>
 	<ui:define name="pageHeader">
-		<h:form>
-
-			<p:growl id="messages" showDetail="true" />
-			<p:toolbar>
-				<f:facet name="left">
-					<p:commandButton type="button" value="Ajouter" icon="ui-icon-plus"
-						onclick="PF('dialog-insert').show();" />
-					<p:commandButton type="button" value="Modifier"
-						icon=" ui-icon-folder-open" onclick="PF('dialog-update').show();" />
-					<p:commandButton type="button" value="Supprimer"
-						icon="ui-icon-trash" />
-					<span class="ui-separator"> <span
-						class="ui-icon ui-icon-grip-dotted-vertical" />
-					</span>
-
-				</f:facet>
-			</p:toolbar>
-			<p:dialog header="Ajouter Catégorie de chambre"
-				widgetVar="dialog-insert" id="dialog-insert" modal="true"
-				height="200" width="600">
-				<h:form>
-					<h:panelGrid columns="2">
+		<h:form id="form-header">
+			<h1>Catégories de chambre</h1>
+		</h:form>			
+	</ui:define>
+	<ui:define name="pageContent">	
+		<h:form id="form">    	    	
+	    	<p:dataTable id="chambreList" var="chambre"  
+	    	rows="10" lazy="true" paginator="true" 
+	    	paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+	    	selectionMode="single" value="#{chambreBean.categoriesChambre}" selection="#{chambreBean.selectedCategorieChambre}" rowKey="#{chambre.id}">
+		        <f:facet name="header">
+		            <p:toolbar>
+						<f:facet name="left">		
+							<p:commandButton process="chambreList" update=":insert-form"  value="Ajouter"  icon="ui-icon-plus" actionListener="#{chambreBean.resetInput}"	oncomplete="PF('insertDialog').show()" />	
+							<p:commandButton process="chambreList" update=":update-form"  value="Modifier" icon="ui-icon-search"  oncomplete="PF('updateDialog').show()" />
+							<p:commandButton update=":form:chambreList" value="Supprimer" icon="ui-icon-search" actionListener="#{chambreBean.doDeleteCategorieChambre}"  >
+								 <p:confirm header="Confirmation" message="Voulez vous vraiment continuer ?" icon="ui-icon-alert" />
+							</p:commandButton>
+							<span class="ui-separator"> 
+								<span class="ui-icon ui-icon-grip-dotted-vertical" />
+							</span>
+						</f:facet>
+					</p:toolbar>
+		        </f:facet>
+		        <p:column headerText="Id" style="width:30px;text-align:center">
+		            <h:outputText value="#{chambre.id}" />
+		        </p:column>
+		        <p:column headerText="Libelle" >
+		            <h:outputText value="#{chambre.libelle}" />
+		        </p:column>
+	    	</p:dataTable>
+	    </h:form>    
+	    <p:confirmDialog global="true" showEffect="fade" >
+	        <p:commandButton value="Oui"  styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	        <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    	</p:confirmDialog>
+	    <p:dialog header="Catégorie de chambre" widgetVar="insertDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+		       <h:form id="insert-form">		       			
+					<h:panelGrid columns="2">						
 						<h:outputText value="Id" />
-						<h:inputText value="#{chambreBean.categorieChambre.id}"
+						<h:inputText value="#{chambreBean.selectedCategorieChambre.id}"
 							style="width:30px" disabled="true" />
 						<h:outputText value="Libellé" />
-						<h:inputText value="#{chambreBean.categorieChambre.libelle}"
+						<h:inputText value="#{chambreBean.selectedCategorieChambre.libelle}" 
 							style="width:450px" />
-						<p:commandButton action="#{chambreBean.doAddCategorieChambre}"
-							onclick="PF('dialog-insert').hide();" value="Enregistrer"
-							icon="ui-icon-disk" update=":chambreList" />
-						<p:commandButton value="Annuler" icon="ui-icon-disk"
-							onclick="PF('dialog-insert').hide();" />
+						<p:commandButton action="#{chambreBean.doAddCategorieChambre}" onclick="PF('insertDialog').hide();" value="Enregistrer" icon="ui-icon-disk" update=":form:chambreList" />
+						<p:commandButton value="Annuler" icon="ui-icon-disk" onclick="PF('insertDialog').hide();" />
 					</h:panelGrid>
 				</h:form>
-			</p:dialog>
-			<p:dialog header="Modifier Catégorie de chambre"
-				widgetVar="dialog-update" id="dialog-update" modal="true"
-				height="200" width="600">
-				<h:form>
-					<h:panelGrid columns="2">
+	    </p:dialog>		
+		<p:dialog header="Catégorie de chambre" widgetVar="updateDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+	       <h:form id="update-form">
+					<h:panelGrid columns="2">					
 						<h:outputText value="Id" />
-						<h:inputText value="#{chambreBean.categorieChambre.id}"
-							style="width:30px" disabled="true" />
+						<h:inputText value="#{chambreBean.selectedCategorieChambre.id}"
+							style="width:30px"   />
 						<h:outputText value="Libellé" />
-						<h:inputText value="#{chambreBean.categorieChambre.libelle}"
+						<h:inputText value="#{chambreBean.selectedCategorieChambre.libelle}" 
 							style="width:450px" />
-						<p:commandButton action="#{chambreBean.doAddCategorieChambre}"
-							onclick="PF('dialog-update').hide();" value="Enregistrer"
-							icon="ui-icon-disk" update=":chambreList" />
-						<p:commandButton value="Annuler" icon="ui-icon-disk"
-							onclick="PF('dialog-update').hide();" />
+						<p:commandButton action="#{chambreBean.doUpdateCategorieChambre}" onclick="PF('updateDialog').hide();" value="Enregistrer" icon="ui-icon-disk" update=":form:chambreList" />
+						<p:commandButton value="Annuler" icon="ui-icon-disk" onclick="PF('updateDialog').hide();" />
 					</h:panelGrid>
 				</h:form>
-			</p:dialog>
-
-		</h:form>
-
+	   	</p:dialog>    	
 	</ui:define>
-	<ui:define name="pageContent">
-		<p:dataTable id="chambreList" var="chambre"
-			value="#{chambreBean.categoriesChambre}" selectionMode="single"
-			selection="#{chambre}" rowKey="#{chambre.id}">
-			<p:column headerText="Id" style="width:20px;">
-				<h:outputText value="#{chambre.id}" />
-			</p:column>
-			<p:column headerText="Libellé" sortBy="#{chambre.libelle}">
-				<h:outputText value="#{chambre.libelle}" />
-			</p:column>
-			
-		</p:dataTable>
-		
-	</ui:define>
-</ui:composition>
+	</ui:composition>

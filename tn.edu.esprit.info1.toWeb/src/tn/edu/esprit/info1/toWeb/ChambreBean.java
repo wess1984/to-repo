@@ -1,65 +1,60 @@
 package tn.edu.esprit.info1.toWeb;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+import javax.faces.bean.RequestScoped;
 
 import services.interfaces.ChambreServiceLocal;
 import domain.CategorieChambre;
 
 @ManagedBean
-@ViewScoped
-public class ChambreBean {
+@RequestScoped
+public class ChambreBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	List<CategorieChambre> categoriesChambre = new LinkedList<>();
-	CategorieChambre categorieChambre;
-
-	@PostConstruct
-	public void init() {
-		categorieChambre = new CategorieChambre();
-	}
+	private CategorieChambre selectedCategorieChambre = new CategorieChambre();
 
 	@EJB
 	ChambreServiceLocal chambreServiceLocal;
 
 	public List<CategorieChambre> getcategoriesChambre() {
-		categoriesChambre = chambreServiceLocal.getAllCategorieChambre();
-		return categoriesChambre;
+		return chambreServiceLocal.getAllCategorieChambre();
 	}
 
 	public void setcategoriesChambre(List<CategorieChambre> categoriesChambre) {
 		this.categoriesChambre = categoriesChambre;
 	}
 
-	public CategorieChambre getCategorieChambre() {
-		System.out.println(this.categorieChambre.getLibelle());
-		return this.categorieChambre;
+	public CategorieChambre getSelectedCategorieChambre() {
+		return this.selectedCategorieChambre;
 	}
 
-	public void setCategorieChambre(CategorieChambre categorieChambre) {
-		this.categorieChambre = categorieChambre;
+	public void setSelectedCategorieChambre(CategorieChambre selectedCategorieChambre) {
+		this.selectedCategorieChambre = selectedCategorieChambre;
 	}
-
-	public ChambreServiceLocal getChambreServiceLocal() {
-		return chambreServiceLocal;
-	}
-
-	public void setChambreServiceLocal(ChambreServiceLocal chambreServiceLocal) {
-		this.chambreServiceLocal = chambreServiceLocal;
-	}
-
+	
 	public void doAddCategorieChambre() {
-		chambreServiceLocal.addCategorieChambre(categorieChambre);
+		chambreServiceLocal.addCategorieChambre(selectedCategorieChambre);
+	}
+	public void doUpdateCategorieChambre(){
+		chambreServiceLocal.updateCategorieVhambre(selectedCategorieChambre);
+	}
+	public void doDeleteCategorieChambre(){
+		chambreServiceLocal.deleteCategorieChambre(selectedCategorieChambre);
+	}
+	
+	public void resetInput(){
+		this.selectedCategorieChambre.setId(-1);
+		this.selectedCategorieChambre.setLibelle("");
 	}
 
 	
-
-	
-
 }
