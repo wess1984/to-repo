@@ -46,6 +46,31 @@ public class VolBean implements Serializable {
 			return "";
 		}
 		
+		public String doUpdateVol(){
+			
+			Aeroport depart = volServiceLocal.findAeroportById(Integer.parseInt(this.getSelectedAeroportDepartId()));
+			Aeroport arrivee = volServiceLocal.findAeroportById(Integer.parseInt(this.getSelectedAeroportArriveeId()));
+			selectedVol.setDepartAeroport(depart);
+			selectedVol.setArriveeAeroport(arrivee);
+			
+			
+			
+			volServiceLocal.updateVol(selectedVol);
+			this.setVol(null);
+			this.setSelectedVol(null);
+
+			return "";
+		}
+		
+		public String doDeleteVol(){
+			
+			volServiceLocal.deleteVol(selectedVol);
+			this.setVol(null);
+			this.setSelectedVol(null);
+
+			return "";
+		}
+		
 		public List<Vol> getVols() {
 			vols=volServiceLocal.getVols();
 			return vols;
