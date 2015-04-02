@@ -38,6 +38,7 @@ public class HotelBean {
 	}
 	
 	public void doAddHotel(){
+		System.out.println(selectedHotel);
 		hotelServiceLocal.addHotel(selectedHotel);
 	}
 	

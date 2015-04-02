@@ -36,11 +36,41 @@ public class VolService implements VolServiceRemote, VolServiceLocal {
 		try {
 			entityManager.persist(vol);
 			state= true;
-		}catch(Exception e){}
+		}catch(Exception e){
+			System.err.println(e);
+			System.err.println("Error on addVol action ...");
+		}
 		
 		return state;
 	}
 
+	@Override
+	public Boolean updateVol(Vol vol) {
+		Boolean state= false;
+		try{
+			entityManager.merge(vol);
+			state = true;
+		}catch(Exception e){
+			System.err.println(e);
+			System.err.println("Error on updateVol action ...");
+		}
+		return state;
+	}
+
+	@Override
+	public Boolean deleteVol(Vol vol) {
+		Boolean state= false;
+		try{
+			entityManager.remove(this.findVolById(vol.getId()));
+			state = true;
+		}catch(Exception e){
+			System.err.println(e);
+			System.err.println("Error on deleteVol action ...");
+		}
+		
+		return state;
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Vol> getVols() {
@@ -65,5 +95,7 @@ public class VolService implements VolServiceRemote, VolServiceLocal {
 	public Vol findVolById(Integer id) {
 		return entityManager.find(Vol.class, id);
 	}
+
+	
 
 }

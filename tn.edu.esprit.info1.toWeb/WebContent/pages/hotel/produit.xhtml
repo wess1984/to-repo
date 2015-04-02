@@ -13,21 +13,23 @@
 		</f:facet>
 	</p:toolbar>
     
-    <p:dataTable id="hotelList" var="hotel" value="#{hotelBean.hotels}" >
+    <p:dataTable id="hotelList" var="hotel" value="#{hotelBean.hotels}" 
+        
+    	selectionMode="single" rowKey="#{hotel.id}">
     	<p:column headerText="Id" style="width:30px;text-align:center">
-		            <h:outputText value="#{hotel.id}" />
+		     <h:outputText value="#{hotel.id}" />
         </p:column>
         <p:column headerText="Code" >
-		            <h:outputText value="#{hotel.code}" />
+		     <h:outputText value="#{hotel.code}" />
         </p:column>
         <p:column headerText="Libellé" >
-		            <h:outputText value="#{hotel.libelle}" />
+		     <h:outputText value="#{hotel.libelle}" />
         </p:column>        
         <p:column headerText="Ville" >
-		            <h:outputText value="#{hotel.ville}" />
+		     <h:outputText value="#{hotel.ville}" />
         </p:column>
         <p:column headerText="Catégorie" >
-		            <h:outputText value="#{hotel.categorie}" />
+		     <h:outputText value="#{hotel.categorie}" />
         </p:column>
     </p:dataTable> 
     
