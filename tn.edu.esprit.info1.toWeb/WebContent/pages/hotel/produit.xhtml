@@ -3,50 +3,86 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" >
-	
-     <p:toolbar>
-		<f:facet name="right">		
-			<p:commandButton process="hotelList" value="Ajouter"  icon="ui-icon-plus" oncomplete="PF('insertDialog').show()" />	
-			<p:commandButton process="hotelList" value="Modifier" icon="ui-icon-pencil"  />
-			<p:commandButton value="Supprimer" icon="ui-icon-close" />
-		</f:facet>
-	</p:toolbar>
+    xmlns:p="http://primefaces.org/ui">
     
-    <p:dataTable id="hotelList" var="hotel" value="#{hotelBean.hotels}" 
-        
-    	selectionMode="single" rowKey="#{hotel.id}">
-    	<p:column headerText="Id" style="width:30px;text-align:center">
-		     <h:outputText value="#{hotel.id}" />
-        </p:column>
-        <p:column headerText="Code" >
-		     <h:outputText value="#{hotel.code}" />
-        </p:column>
-        <p:column headerText="Libellé" >
-		     <h:outputText value="#{hotel.libelle}" />
-        </p:column>        
-        <p:column headerText="Ville" >
-		     <h:outputText value="#{hotel.ville}" />
-        </p:column>
-        <p:column headerText="Catégorie" >
-		     <h:outputText value="#{hotel.categorie}" />
-        </p:column>
-    </p:dataTable> 
     
-    <p:dialog header="Hotel produit" widgetVar="insertDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+<h:form id="form">    	    	
+    	<p:dataTable id="HotelsList" var="hotel"	
+	    	selectionMode="single" value="#{hotelBean.hotels}" selection="#{hotelBean.selectedHotel}" rowKey="#{hotel.id}">
+	    	<f:facet name="header">
+	            <p:toolbar>
+					<f:facet name="right">		
+						<p:commandButton process="HotelsList" update=":tabview:insert-form"  value="Ajouter"  icon="ui-icon-plus" oncomplete="PF('insertDialog').show()" actionListener="#{hotelBean.resetInput}" />	
+						<p:commandButton process="HotelsList" update=":tabview:update-form"  value="Modifier" icon="ui-icon-pencil"  oncomplete="PF('updateDialog').show()" />
+						<p:commandButton update=":tabview:form:HotelsList" value="Supprimer" icon="ui-icon-close" actionListener="#{hotelBean.doDeleteHotel}" >
+							<p:confirm header="Confirmation" message="Voulez vous vraiment continuer ?" icon="ui-icon-alert" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+	        </f:facet>
+	    	<p:column headerText="Id" style="width:1px;text-align:center">
+	            <h:outputText value="#{hotel.id}" />
+	        </p:column>
+	        <p:column headerText="Code" style="width:5px;text-align:center">
+	            <h:outputText value="#{hotel.code}" />
+	        </p:column>
+	        <p:column headerText="Libellé" style="width:50px;text-align:center">
+	            <h:outputText value="#{hotel.libelle}" />
+	        </p:column>
+	        <p:column headerText="Ville" style="width:30px;text-align:center">
+	            <h:outputText value="#{hotel.ville}" />
+	        </p:column>
+	        <p:column headerText="Catégorie" style="width:30px;text-align:center">
+	            <h:outputText value="#{hotel.categorie}" />
+	        </p:column>
+		</p:dataTable>
+		</h:form>
+		<p:dialog header="Détail Hötel" widgetVar="insertDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
 		       <h:form id="insert-form">		       			
 					<h:panelGrid columns="2">						
 						<h:outputText value="Id" />
-						<h:inputText value="#{hotelBean.selectedHotel.id}" style="width:30px" disabled="true" />
+						<h:inputText value="#{hotelBean.selectedHotel.id}"
+							style="width:30px" disabled="true" />
 						<h:outputText value="Code" />
-						<h:inputText value="#{hotelBean.selectedHotel.code}" style="width:55px" />
+						<h:inputText value="#{hotelBean.selectedHotel.code}"
+							style="width:400px"  />
 						<h:outputText value="Libellé" />
-						<h:inputText value="#{hotelBean.selectedHotel.libelle}" style="width:450px" />
+						<h:inputText value="#{hotelBean.selectedHotel.libelle}"
+							style="width:400px"  />
 						<h:outputText value="Ville" />
-						<h:inputText value="#{hotelBean.selectedHotel.ville}" style="width:450px" />
-						<p:commandButton value="Enregistrer" icon="ui-icon-disk" update="@all"  action="#{hotelBean.doAddHotel}"  />
-						<p:commandButton value="Annuler" icon="ui-icon-disk"  />
+						<h:inputText value="#{hotelBean.selectedHotel.ville}"
+							style="width:200px"  />
+							<h:outputText value="Catégorie" />
+						<h:inputText value="#{hotelBean.selectedHotel.categorie}"
+							style="width:200px"  />
+						<p:commandButton action="#{hotelBean.doAddHotel}" onclick="PF('insertDialog').hide();" value="Enregistrer" icon="ui-icon-disk" update=":tabview:form:HotelsList" />
+						<p:commandButton value="Annuler" icon="ui-icon-disk" onclick="PF('insertDialog').hide();" />
 					</h:panelGrid>
 				</h:form>
-   </p:dialog>		    
-</ui:composition>
+	    </p:dialog>	
+	    <p:dialog header="Détail Hötel" widgetVar="updateDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+		       <h:form id="update-form">		       			
+					<h:panelGrid columns="2">						
+					<h:outputText value="" />
+						<h:inputHidden value="#{hotelBean.selectedHotel.id}"
+							style="width:30px"  />
+						<h:outputText value="Code" />
+						<h:inputText value="#{hotelBean.selectedHotel.code}"
+							style="width:400px"  />
+						<h:outputText value="Libellé" />
+						<h:inputText value="#{hotelBean.selectedHotel.libelle}"
+							style="width:400px"  />
+						<h:outputText value="Ville" />
+						<h:inputText value="#{hotelBean.selectedHotel.ville}"
+							style="width:200px"  />
+							<h:outputText value="Catégorie" />
+						<h:inputText value="#{hotelBean.selectedHotel.categorie}"
+							style="width:200px"  />
+						<p:commandButton action="#{hotelBean.doUpdateHotel}" onclick="PF('updateDialog').hide();" value="Enregistrer" icon="ui-icon-disk" update=":tabview:form:HotelsList" />
+						<p:commandButton value="Annuler" icon="ui-icon-disk" onclick="PF('updateDialog').hide();" />
+					</h:panelGrid>
+				</h:form>
+	    </p:dialog>	
+    
+    
+ </ui:composition>

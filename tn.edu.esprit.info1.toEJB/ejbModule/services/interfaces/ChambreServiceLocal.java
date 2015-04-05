@@ -10,7 +10,7 @@ import domain.CategorieChambre;
 @Local
 public interface ChambreServiceLocal {
 	Boolean addCategorieChambre(CategorieChambre categorieChambre);
-	Boolean updateCategorieVhambre(CategorieChambre categorieChambre);
+	Boolean updateCategorieChambre(CategorieChambre categorieChambre);
 	List<CategorieChambre> getAllCategorieChambre();
 	Boolean deleteCategorieChambre(CategorieChambre categorieChambre);
 }

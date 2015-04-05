@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import domain.CategorieChambre;
 import domain.Hotel;
 import services.interfaces.HotelServiceLocal;
 
@@ -40,6 +41,31 @@ public class HotelService implements HotelServiceLocal {
 			b = true;
 		} catch (Exception e) {
 			System.out.println("insertion errors ...");
+		}
+		return b;
+	}
+
+	@Override
+	public Boolean updateHotel(Hotel hotel) {
+		Boolean b = false;
+		try {
+			entityManager.merge(hotel);
+			b = true;
+		} catch (Exception e) {
+			System.out.println("updating  errors ...");
+		}
+		return b;
+	}
+
+	@Override
+	public Boolean deleteHote(Hotel hotel) {
+		Boolean b = false;
+		try {
+			entityManager.remove(entityManager.find(Hotel.class, hotel.getId()));
+			b = true;
+		} catch (Exception e) {
+			System.err.println(e);
+			System.err.println("delete errors ...");
 		}
 		return b;
 	}

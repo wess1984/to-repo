@@ -45,7 +45,7 @@ public class ChambreBean implements Serializable {
 		chambreServiceLocal.addCategorieChambre(selectedCategorieChambre);
 	}
 	public void doUpdateCategorieChambre(){
-		chambreServiceLocal.updateCategorieVhambre(selectedCategorieChambre);
+		chambreServiceLocal.updateCategorieChambre(selectedCategorieChambre);
 	}
 	public void doDeleteCategorieChambre(){
 		chambreServiceLocal.deleteCategorieChambre(selectedCategorieChambre);

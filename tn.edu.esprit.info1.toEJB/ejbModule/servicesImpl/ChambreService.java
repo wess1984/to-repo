@@ -49,7 +49,7 @@ public class ChambreService implements ChambreServiceLocal {
 
 
 	@Override
-	public Boolean updateCategorieVhambre(CategorieChambre categorieChambre) {
+	public Boolean updateCategorieChambre(CategorieChambre categorieChambre) {
 		Boolean b = false;
 		try {
 			entityManager.merge(categorieChambre);
