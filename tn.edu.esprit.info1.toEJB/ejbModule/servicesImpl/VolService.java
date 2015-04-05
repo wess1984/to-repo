@@ -1,16 +1,24 @@
 package servicesImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import domain.Aeroport;
+import domain.Avion;
+import domain.Compagnie;
+import domain.Place;
 import domain.Vol;
 import services.interfaces.VolServiceLocal;
 import services.interfaces.VolServiceRemote;
+import utils.TypePlace;
+
 
 /**
  * Session Bean implementation class VolService
@@ -94,6 +102,28 @@ public class VolService implements VolServiceRemote, VolServiceLocal {
 	@Override
 	public Vol findVolById(Integer id) {
 		return entityManager.find(Vol.class, id);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Compagnie> getCompagnies() {
+		return entityManager.createQuery("SELECT c from Compagnie c").getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Avion> findAvionsByCompany(Integer code) {
+		
+		TypedQuery<Avion> query = entityManager.createQuery("SELECT av from Avion av WHERE av.compagnie.id=:inputCode",Avion.class);
+		query.setParameter("inputCode", code);
+		
+		
+		return query.getResultList();
+	}
+
+	@Override
+	public Avion findAvionById(Integer id) {
+		return entityManager.find(Avion.class, id);
 	}
 
 	
