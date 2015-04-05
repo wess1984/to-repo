@@ -55,13 +55,5 @@ public class Aeroport implements Serializable {
 		this.ville = ville;
 	}
 
-
-
-	/*@Override
-	public String toString() {
-		return  nom;
-	}*/
-	
-	
    
 }

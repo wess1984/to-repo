@@ -3,80 +3,30 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
-	<ui:define name="entete">Gestion des vols</ui:define>
-	<ui:define name="pageTitle">Gestion des vols</ui:define>
+	<ui:define name="entete">Vols</ui:define>
+	<ui:define name="pageTitle">Vols</ui:define>
 	<ui:define name="pageHeader">
 		<h:form id="form-header">
-			<h2>Gestion des vols</h2>
-		</h:form>
+			<h3>Vols</h3>
+		</h:form>			
 	</ui:define>
+	
 	<ui:define name="pageContent">
-		<h:form id="form">
-			<p:dataTable id="volList" var="vol" rows="10" lazy="true"
-				paginator="true" paginatorPosition="bottom"
-				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-				selectionMode="single" value="#{volBean.vols}"
-				selection="#{volBean.selectedVol}"
-				rowKey="#{vol.id}">
-				<f:facet name="header">
-					<p:toolbar>
-						<f:facet name="right">
-							<p:commandButton process="volList" update=":insert-form"
-								value="Ajouter" icon="ui-icon-plus"
-								oncomplete="PF('insertDialog').show()" />
-							<p:commandButton process="volList" update=":update-form"
-								value="Modifier" icon="ui-icon-pencil"
-								oncomplete="PF('updateDialog').show()" />
-							<p:commandButton update=":form:volList" value="Supprimer"
-								icon="ui-icon-close"
-								actionListener="#{volBean.doDeleteVol}">
-								<p:confirm header="Confirmation"
-									message="Voulez vous vraiment continuer ?" icon="ui-icon-alert" />
-							</p:commandButton>
-
-						</f:facet>
-					</p:toolbar>
-				</f:facet>
-				<p:column headerText="Id">
-					<h:outputText value="#{vol.id}" />
-				</p:column>
-				<p:column headerText="Trajet">
-					<h:outputText value="#{vol.designation}" />
-				</p:column>
-				<p:column headerText="Départ">
-					<h:outputText value="#{vol.dateDepart}">
-						<f:convertDateTime for="departDateId" pattern="dd/MM/yyyy HH:mm" type="both" />
-					</h:outputText>
-					/ <h:outputText value="#{vol.depart.nom}" />
-				</p:column>
-				<p:column headerText="Arrivée">
-					<h:outputText value="#{vol.dateArrivee}">
-						<f:convertDateTime for="arriveeDateId" pattern="dd/MM/yyyy HH:mm" type="both" />
-					</h:outputText>
-					/ <h:outputText value="#{vol.arrivee.nom}" />
-				</p:column>
-				<p:column headerText="Trajet">
-					<h:outputText value="#{vol.avion}" />
-				</p:column>
-			</p:dataTable>
-		</h:form>
-		<p:confirmDialog global="true" showEffect="fade">
-			<p:commandButton value="Oui" styleClass="ui-confirmdialog-yes"
-				icon="ui-icon-check" />
-			<p:commandButton value="Non" type="button"
-				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-		</p:confirmDialog>
+	
+	<p:tabView id="tabview">
+	
+        <p:tab title="Produits">
+            <h:panelGrid columns="2" cellpadding="10">
+                <ui:include src="vol/produit.xhtml" />
+            </h:panelGrid>
+        </p:tab>
+       
+         <p:tab title="Compagnies"> </p:tab>
+         <p:tab title="Avions"></p:tab>
+         <p:tab title="Places"></p:tab>
+        </p:tabView>
 		
-		<!-- Insert Form -->
-		<p:dialog header="Ajout Vol" widgetVar="insertDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-		       <h:form id="insert-form">
-		       </h:form>
-		</p:dialog>
-		<!-- Update Form -->
-		<p:dialog header="Modifier Vol" widgetVar="updateDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-		       <h:form id="update-form">
-		       </h:form>
-		</p:dialog>
 	</ui:define>
-</ui:composition>
+	
+	</ui:composition>
 
