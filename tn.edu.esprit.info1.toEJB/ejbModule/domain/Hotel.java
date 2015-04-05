@@ -79,6 +79,15 @@ public class Hotel extends Produit implements Serializable {
 	public void setCategorieChambreProduits(List<CategorieChambreProduit> categorieChambreProduits) {
 		this.categorieChambreProduits = categorieChambreProduits;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Hotel [code=" + code + ", libelle=" + libelle + ", ville="
+				+ ville + ", categorie=" + categorie
+				+ ", categorieChambreProduits=" + categorieChambreProduits
+				+ "]";
+	}
 	
 	
    

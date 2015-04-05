@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+	<ui:define name="entete">Chambres</ui:define>
+	<ui:define name="pageTitle">Chambres</ui:define>
+	<ui:define name="pageHeader">
+		<h:form id="form-header">
+			<h3>Produit Hotel</h3>
+		</h:form>			
+	</ui:define>
+	<ui:define name="pageContent">
+	    
+    	<p:tabView scrollable="true">
+	        <p:tab title="Produit"><ui:include src="hotel/produit.xhtml" /></p:tab>
+	        <p:tab title="Catégorie de chambre">Catégorie de chambre</p:tab>
+	        <p:tab title="Stock">Stock</p:tab>
+	        <p:tab title="Tarif">Tarif</p:tab>
+    	</p:tabView>
+	
+	</ui:define>
+</ui:composition>

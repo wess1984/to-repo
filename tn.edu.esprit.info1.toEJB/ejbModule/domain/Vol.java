@@ -1,10 +1,11 @@
 package domain;
 
-import domain.Produit;
+
 import java.io.Serializable;
-import java.lang.Integer;
 import java.lang.String;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.*;
 
 /**
@@ -12,16 +13,16 @@ import javax.persistence.*;
  *
  */
 @Entity
-
 public class Vol extends Produit implements Serializable {
 
-	
 	private String numeroVol;
+	private Aeroport depart;
+	private Aeroport arrivee;
 	private Date dateDepart;
 	private Date dateArrivee;
-	private Aeroport departAeroport;
-	private Aeroport arriveeAeroport;
-	private Integer capacite;
+	private Avion avion;
+	private List<Place> places;
+	
 	private static final long serialVersionUID = 1L;
 
 	public Vol() {
@@ -29,15 +30,16 @@ public class Vol extends Produit implements Serializable {
 	}   
 	
 	
-	public Vol(String numeroVol, Date dateDepart, Date dateArrivee,
-			Aeroport departAeroport, Aeroport arriveeAeroport, Integer capacite) {
+	public Vol(String numeroVol, Aeroport depart, Aeroport arrivee,
+			Date dateDepart, Date dateArrivee, Avion avion, List<Place> places) {
 		super();
 		this.numeroVol = numeroVol;
+		this.depart = depart;
+		this.arrivee = arrivee;
 		this.dateDepart = dateDepart;
 		this.dateArrivee = dateArrivee;
-		this.departAeroport = departAeroport;
-		this.arriveeAeroport = arriveeAeroport;
-		this.capacite = capacite;
+		this.avion = avion;
+		this.places = places;
 	}
 
 
@@ -47,46 +49,73 @@ public class Vol extends Produit implements Serializable {
 
 	public void setNumeroVol(String numeroVol) {
 		this.numeroVol = numeroVol;
-	}   
-	
-	public Date getDateDepart() {
-		return this.dateDepart;
 	}
+
+	
+	@ManyToOne
+	public Avion getAvion() {
+		return avion;
+	}
+
+
+	public void setAvion(Avion avion) {
+		this.avion = avion;
+	}
+
+	@OneToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
+	public List<Place> getPlaces() {
+		return places;
+	}
+
+
+	public void setPlaces(List<Place> places) {
+		this.places = places;
+	}
+
+	@OneToOne
+	public Aeroport getDepart() {
+		return depart;
+	}
+
+
+	public void setDepart(Aeroport depart) {
+		this.depart = depart;
+	}
+
+	@OneToOne
+	public Aeroport getArrivee() {
+		return arrivee;
+	}
+
+
+	public void setArrivee(Aeroport arrivee) {
+		this.arrivee = arrivee;
+	}
+
+
+
+	public Date getDateDepart() {
+		return dateDepart;
+	}
+
+
 
 	public void setDateDepart(Date dateDepart) {
 		this.dateDepart = dateDepart;
-	}   
-	public Date getDateArrivee() {
-		return this.dateArrivee;
 	}
+
+
+
+	public Date getDateArrivee() {
+		return dateArrivee;
+	}
+
+
 
 	public void setDateArrivee(Date dateArrivee) {
 		this.dateArrivee = dateArrivee;
-	}   
+	}
+
+
 	
-	@OneToOne
-	public Aeroport getDepartAeroport() {
-		return this.departAeroport;
-	}
-
-	public void setDepartAeroport(Aeroport departAeroport) {
-		this.departAeroport = departAeroport;
-	}   
-	
-	@OneToOne
-	public Aeroport getArriveeAeroport() {
-		return this.arriveeAeroport;
-	}
-
-	public void setArriveeAeroport(Aeroport arriveeAeroport) {
-		this.arriveeAeroport = arriveeAeroport;
-	}   
-	public Integer getCapacite() {
-		return this.capacite;
-	}
-
-	public void setCapacite(Integer capacite) {
-		this.capacite = capacite;
-	}
-   
 }

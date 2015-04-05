@@ -16,13 +16,8 @@ import utils.Emplacement;
 import utils.TypePlace;
 import domain.Aeroport;
 import domain.Avion;
-import domain.CategorieChambre;
-import domain.CategorieChambreProduit;
-import domain.CategorieChambreProduitId;
 import domain.Compagnie;
-import domain.Hotel;
 import domain.Place;
-import domain.Produit;
 import domain.Vol;
 
 @Singleton
@@ -47,9 +42,6 @@ public class VolPopulator {
 		
 		Aeroport depart  = entityManager.find(Aeroport.class, 1);
 		Aeroport arrivee = entityManager.find(Aeroport.class, 5);
-		
-		
-		
 		
 		Vol vol = new Vol("TN001", depart, arrivee, new Date(), new Date(), avions.get(1),places);
 		
@@ -86,9 +78,6 @@ public class VolPopulator {
 		Avion avion1 = new Avion("Airbus", "A320", true, true, 200, 40, compagnie1, null);
 		Avion avion2 = new Avion("Boeing", "B737", true, true, 380, 80, compagnie1, null);
 		Avion avion3 = new Avion("Airbus", "A330", true, true, 300, 60, compagnie1, null);
-		
-		
-		
 		Avion avion4 = new Avion("Airbus", "A340", true, true, 400, 50, compagnie2, null);
 		Avion avion5 = new Avion("Boeing", "B747", true, true, 380, 80, compagnie2, null);
 		Avion avion6 = new Avion("Airbus", "A330", true, true, 300, 60, compagnie2, null);

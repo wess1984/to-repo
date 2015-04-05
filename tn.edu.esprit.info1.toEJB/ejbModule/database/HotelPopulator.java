@@ -37,6 +37,7 @@ public class HotelPopulator {
 		initCategorieChambres();
 		
 		Hotel hotel = new Hotel("H01546", "BE LIVE LANZAROTE RESORT 4*", "", "4****",null);
+		
 		entityManager.persist(hotel);
 		
 		for (CategorieChambre category : categorieChambres) {
