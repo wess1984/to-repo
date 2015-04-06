@@ -126,6 +126,52 @@ public class VolService implements VolServiceRemote, VolServiceLocal {
 		return entityManager.find(Avion.class, id);
 	}
 
+	@Override
+	public Boolean addCompany(Compagnie compagnie) {
+		Boolean state = false;
+		try {
+			entityManager.persist(compagnie);
+			state= true;
+		}catch(Exception e){
+			System.err.println(e);
+			System.err.println("Error on addCompany action ...");
+		}
+		
+		return state;
+	}
+
+	@Override
+	public Boolean updateCompany(Compagnie compagnie) {
+		Boolean state= false;
+		try{
+			entityManager.merge(compagnie);
+			state = true;
+		}catch(Exception e){
+			System.err.println(e);
+			System.err.println("Error on updateCompany action ...");
+		}
+		return state;
+	}
+
+	@Override
+	public Boolean deleteCompany(Compagnie compagnie) {
+		Boolean state= false;
+		try{
+			entityManager.remove(this.findCompanyById(compagnie.getId()));
+			state = true;
+		}catch(Exception e){
+			System.err.println(e);
+			System.err.println("Error on deleteCompany action ...");
+		}
+		
+		return state;
+	}
+
+	@Override
+	public Compagnie findCompanyById(Integer id) {
+		return entityManager.find(Compagnie.class, id);
+	}
+
 	
 
 }

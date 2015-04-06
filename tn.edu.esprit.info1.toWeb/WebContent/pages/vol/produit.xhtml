@@ -145,6 +145,8 @@
 	<p:dialog id='delete-dialog' widgetVar="deleteDialog" header="Confirmation" modal="true" resizable="false">
             <h:panelGrid columns="3">
                 <h:outputText value="Voulez vous vraiment continuer ?"/>
+                <h:outputLabel />
+                <h:outputLabel />
                 <p:commandButton action="#{volBean.doDeleteVol}" onclick="PF('deleteDialog').hide()" value="Oui" icon="ui-icon-check" update=":tabview:form:volList"  />
                 <p:commandButton value="Non" type="button" icon="ui-icon-close" onclick="PF('deleteDialog').hide()"/>
             </h:panelGrid>
