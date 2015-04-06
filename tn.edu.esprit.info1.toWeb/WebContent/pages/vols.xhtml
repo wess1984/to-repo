@@ -15,15 +15,19 @@
 	
 	<p:tabView id="tabview">
 	
-        <p:tab title="Produits">
+        <p:tab id="produitTab" title="Produits">
             <h:panelGrid columns="2" cellpadding="10">
                 <ui:include src="vol/produit.xhtml" />
             </h:panelGrid>
         </p:tab>
        
-         <p:tab title="Compagnies"> </p:tab>
-         <p:tab title="Avions"></p:tab>
-         <p:tab title="Places"></p:tab>
+         <p:tab id="companyTab" title="Compagnies">
+         	<h:panelGrid columns="2" cellpadding="10">
+                <ui:include src="vol/compagnie.xhtml" />
+            </h:panelGrid>
+         </p:tab>
+         <p:tab id="avionTab" title="Avions"></p:tab>
+         
         </p:tabView>
 		
 	</ui:define>

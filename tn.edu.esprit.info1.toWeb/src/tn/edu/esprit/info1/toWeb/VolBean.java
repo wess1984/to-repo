@@ -24,6 +24,7 @@ public class VolBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Vol selectedVol;
+	private Compagnie selectedCompany;
 	private List<Vol> vols = new ArrayList<>();
 	private List<Aeroport> aeroports = new ArrayList<>();
 	private List<Compagnie> compagnies = new ArrayList<>();
@@ -128,6 +129,15 @@ public class VolBean implements Serializable{
 		this.selectedAvionId = selectedAvionId;
 	}
 
+	public Compagnie getSelectedCompany() {
+		if(selectedCompany==null) selectedCompany = new Compagnie();
+		return selectedCompany;
+	}
+
+	public void setSelectedCompany(Compagnie selectedCompany) {
+		this.selectedCompany = selectedCompany;
+	}
+
 	/** Methods **/
 	public String doAddVol(){
 		
@@ -162,6 +172,21 @@ public class VolBean implements Serializable{
 	
 	public String doDeleteVol(){
 		serviceLocal.deleteVol(selectedVol);
+		return "";
+	}
+	
+	public String doAddCompany(){
+		serviceLocal.addCompany(selectedCompany);
+		return "";
+	}
+	
+	public String doUpdateCompany(){
+		serviceLocal.updateCompany(selectedCompany);
+		return "";
+	}
+	
+	public String doDeleteCompany(){
+		serviceLocal.deleteCompany(selectedCompany);
 		return "";
 	}
 	
