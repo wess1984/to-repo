@@ -15,5 +15,5 @@ public interface ChambreServiceLocal {
 	Boolean updateCategorieChambre(CategorieChambre categorieChambre);
 	List<CategorieChambre> getAllCategorieChambre();
 	Boolean deleteCategorieChambre(CategorieChambre categorieChambre);
-	
+	List<CategorieChambre> getAllWhereCategNotInHotel(Integer idprod);
 }

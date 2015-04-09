@@ -108,11 +108,7 @@ public class HotelPopulator {
 		categorieChambres.add(categorieChambre11);
 		categorieChambres.add(categorieChambre12);
 		categorieChambres.add(categorieChambre13);
-		categorieChambres.add(categorieChambre14);
-		categorieChambres.add(categorieChambre15);
-		categorieChambres.add(categorieChambre16);
-		categorieChambres.add(categorieChambre17);
-		categorieChambres.add(categorieChambre18);
+
 		
 		
 	}
