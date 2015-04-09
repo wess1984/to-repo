@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import domain.CategorieChambre;
+import domain.CategorieChambreProduit;
 import domain.Hotel;
 
 @Local
@@ -14,4 +15,5 @@ public interface HotelServiceLocal {
 	Boolean addHotel(Hotel hotel);
 	Boolean updateHotel(Hotel hotel);
 	Boolean deleteHote(Hotel hotel);
+	List<CategorieChambreProduit> getCategoriesChambreByHotel(Integer id);
 }

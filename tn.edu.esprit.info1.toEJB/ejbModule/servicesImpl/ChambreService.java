@@ -8,6 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import domain.CategorieChambre;
+import domain.CategorieChambreProduit;
+import domain.Hotel;
 import services.interfaces.ChambreServiceLocal;
 
 /**
@@ -74,4 +76,5 @@ public class ChambreService implements ChambreServiceLocal {
 		}
 		return b;
 	}
+
 }

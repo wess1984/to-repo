@@ -7,20 +7,21 @@
     
     
 <h:form id="form">    	    	
-    	<p:dataTable id="HotelsList" var="hotel"	
+    	<p:dataTable id="HotelsList" var="hotel" onRowSelectComplete="alert('test')"
 	    	selectionMode="single" value="#{hotelBean.hotels}" selection="#{hotelBean.selectedHotel}" rowKey="#{hotel.id}">
+	    	<p:ajax event="rowSelect" update=":tabview" />
 	    	<f:facet name="header">
 	            <p:toolbar>
 					<f:facet name="right">		
 						<p:commandButton process="HotelsList" update=":tabview:insert-form"  value="Ajouter"  icon="ui-icon-plus" oncomplete="PF('insertDialog').show()" actionListener="#{hotelBean.resetInput}" />	
 						<p:commandButton process="HotelsList" update=":tabview:update-form"  value="Modifier" icon="ui-icon-pencil"  oncomplete="PF('updateDialog').show()" />
-						<p:commandButton update=":tabview:form:HotelsList" value="Supprimer" icon="ui-icon-close" actionListener="#{hotelBean.doDeleteHotel}" >
+						<p:commandButton update=":tabview:form:HotelsList" value="Supprimer" icon="ui-icon-close" >
 							<p:confirm header="Confirmation" message="Voulez vous vraiment continuer ?" icon="ui-icon-alert" />
 						</p:commandButton>
 					</f:facet>
 				</p:toolbar>
 	        </f:facet>
-	    	<p:column headerText="Id" style="width:1px;text-align:center">
+	    	<p:column headerText="Id" style="width:1px;text-align:center" >
 	            <h:outputText value="#{hotel.id}" />
 	        </p:column>
 	        <p:column headerText="Code" style="width:5px;text-align:center">

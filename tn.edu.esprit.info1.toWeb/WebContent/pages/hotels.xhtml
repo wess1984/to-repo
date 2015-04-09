@@ -12,13 +12,19 @@
 	</ui:define>
 	
 	<ui:define name="pageContent">
-	<p:tabView id="tabview">
-        <p:tab title="Produit">
+	 
+	 	
+	<p:tabView id="tabview" dynamic="true" >     
+       <p:tab title="Produit">
             <h:panelGrid columns="2" cellpadding="10">
                 <ui:include src="hotel/produit.xhtml" />
             </h:panelGrid>
         </p:tab>
-         <p:tab title="Catégorie de chambre"> </p:tab>
+        <p:tab title="Catégorie de chambre" > 
+         	<h:panelGrid columns="2" cellpadding="10">
+                <ui:include src="hotel/categorie.xhtml" />
+            </h:panelGrid>
+         </p:tab>
          <p:tab title="Stock"></p:tab>
          <p:tab title="Tarif"></p:tab>
         </p:tabView>

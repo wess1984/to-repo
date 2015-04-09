@@ -1,0 +1,22 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+	 <h:form id="test-form">
+		<h:outputText value="#{categorieChambreBean.selectedHotel.libelle}" />
+	</h:form>
+
+	<p:dataTable var="ccp" value="#{categorieChambreBean.categorieChambreProduits}">
+	    <p:column headerText="Id" style="width:10px">
+	        <h:outputText value="#{ccp.categorieChambre.id}" />
+	    </p:column>
+	 
+	    <p:column headerText="Libellé">
+	        <h:outputText value="#{ccp.categorieChambre.libelle}" />
+	    </p:column>
+	</p:dataTable>
+
+</ui:composition>

@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import domain.CategorieChambre;
+import domain.CategorieChambreProduit;
 import domain.Hotel;
 import services.interfaces.HotelServiceLocal;
 
@@ -68,6 +69,13 @@ public class HotelService implements HotelServiceLocal {
 			System.err.println("delete errors ...");
 		}
 		return b;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CategorieChambreProduit> getCategoriesChambreByHotel(Integer id) {
+		return entityManager.createQuery("select h.categorieChambreProduits from Hotel h where h.id = :id")
+				.setParameter("id", id).getResultList();
 	}
 
 }

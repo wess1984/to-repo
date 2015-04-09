@@ -6,12 +6,14 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import services.interfaces.HotelServiceLocal;
 import domain.Hotel;
 
-@ManagedBean
-@RequestScoped
+@ManagedBean(name="hotelBean")
+@ViewScoped
 public class HotelBean implements Serializable {
 
 	private List<Hotel> hotels;
@@ -49,7 +51,5 @@ public class HotelBean implements Serializable {
 	
 	public void resetInput(){
 		this.selectedHotel = new Hotel();
-		
-		
 	}
 }
