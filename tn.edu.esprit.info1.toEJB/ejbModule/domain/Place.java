@@ -18,7 +18,7 @@ import utils.TypePlace;
 
 public class Place implements Serializable {
 
-	
+	private Integer id;
 	private String reference;
 	private TypePlace type; // Economique | Business
 	private Emplacement emplacement; // coté fenetre
@@ -42,7 +42,17 @@ public class Place implements Serializable {
 		this.remise = remise;
 	}
 
-	@Id    
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	    
 	public String getReference() {
 		return this.reference;
 	}

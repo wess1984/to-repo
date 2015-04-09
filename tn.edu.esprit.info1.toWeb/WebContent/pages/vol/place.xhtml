@@ -1,0 +1,73 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    
+    <h:form id="form-place">    	    	
+    	<p:dataTable id="placeList" var="place" selectionMode="single" value="#{volBean.places}" selection="#{volBean.selectedPlace}" rowKey="#{place.id}">
+	    	<f:facet name="header">
+	            <p:toolbar>
+					<f:facet name="right">		
+						<p:commandButton process="placeList" update=":tabview:update-form-place"  value="Modifier" icon="ui-icon-pencil"  oncomplete="PF('updateDialogPlace').show()" />
+				</f:facet>
+				</p:toolbar>
+	        </f:facet>
+	    	<p:column headerText="ID" style="width:6px;">
+	            <h:outputText value="#{place.id}" />
+	        </p:column>
+	        <p:column headerText="Référence">
+	            <h:outputText value="#{place.reference}" />
+	        </p:column>
+	        <p:column headerText="Classe">
+	            <h:outputText value="#{place.type}" />
+	        </p:column>
+	        <p:column headerText="Emplacement">
+	            <h:outputText value="#{not empty place and place.type eq 'Business' ? '--' : place.emplacement}" />
+	        </p:column>
+	        <p:column headerText="Disponible ?">
+	            <h:outputText value="#{not empty place and place.estReserve ? 'Non' : 'Oui'}" />
+	        </p:column>
+	        <p:column headerText="Prix (en D.T)">
+	            <h:outputText value="#{place.prix}" />
+	        </p:column>
+	        <p:column headerText="Remise (en %)">
+	            <h:outputText value="#{place.remise}" />
+	        </p:column>
+	        <p:column headerText="Prix Final (en D.T)">
+	            <h:outputText value="#{place.prix - (place.prix * (place.remise/100))}"  style="font-weight: bold;"/>
+	        </p:column>
+		</p:dataTable>
+	</h:form>
+	<p:dialog header="Modifier Place" widgetVar="updateDialogPlace" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+		  <h:form id="update-form-place">
+		  	
+			<h:panelGrid columns="2" style="width: 450px;">						
+				<h:outputText value="Classe" />
+				<h:selectOneMenu value="#{volBean.selectedPlace.type}" valueChangeListener="#{volBean.typePlaceChangeListener}" style="width:250px" >
+					<f:selectItems value="#{volBean.typesPlace}" />
+					<p:ajax update="emplacementId" event="change" />
+				</h:selectOneMenu>
+						
+				<h:outputText value="Emplacement" />
+				<h:selectOneMenu id="emplacementId" disabled="#{!volBean.visible}" value="#{volBean.selectedPlace.emplacement}" style="width:250px" >
+					<f:selectItems value="#{volBean.emplacements}" />
+				</h:selectOneMenu>
+				
+				<h:outputText value="Prix (en D.T)" />
+				<h:inputText value="#{volBean.selectedPlace.prix}" />
+				
+				<h:outputText value="Remise (en %)" />
+				<h:inputText value="#{volBean.selectedPlace.remise}" />
+				
+				<h:outputText value="Reservé ?" />
+				<p:selectBooleanCheckbox value="#{volBean.selectedPlace.estReserve}" />
+				
+				<p:commandButton action="#{volBean.doUpdatePlace}" onclick="PF('updateDialogPlace').hide();" value="Enregistrer" icon="ui-icon-disk" update=":tabview:form-place:placeList, :tabview:form:volList" />
+				<p:commandButton value="Annuler" icon="ui-icon-disk" onclick="PF('updateDialogPlace').hide();" />
+			</h:panelGrid>
+		  </h:form>
+	</p:dialog>	
+	
+</ui:composition>

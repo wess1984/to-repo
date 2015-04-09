@@ -1,0 +1,113 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    
+    <h:form id="form-avion">    	    	
+    	<p:dataTable id="avionList" var="avion" selectionMode="single" value="#{volBean.avions}" selection="#{volBean.selectedAvion}" rowKey="#{avion.id}">
+	    	<f:facet name="header">
+	            <p:toolbar>
+					<f:facet name="right">		
+						<p:commandButton process="avionList" update=":tabview:insert-form-avion"  value="Ajouter"  icon="ui-icon-plus" oncomplete="PF('insertDialogAvion').show()" actionListener="#{volBean.resetFormListener}" />	
+						<p:commandButton process="avionList" update=":tabview:update-form-avion"  value="Modifier" icon="ui-icon-pencil"  oncomplete="PF('updateDialogAvion').show()" />
+						<p:commandButton process="avionList" value="Supprimer" icon="ui-icon-close" oncomplete="PF('deleteDialogAvion').show()" />
+				</f:facet>
+				</p:toolbar>
+	        </f:facet>
+	    	<p:column headerText="ID" style="width:6px;">
+	            <h:outputText value="#{avion.id}" />
+	        </p:column>
+	        <p:column headerText="Constructeur">
+	            <h:outputText value="#{avion.constructeur}" />
+	        </p:column>
+	        <p:column headerText="Modèle">
+	            <h:outputText value="#{avion.modele}" />
+	        </p:column>
+	        <p:column headerText="Places Business">
+	            <h:outputText value="#{not empty avion and avion.classeBusiness ? avion.nombrePlaceBusiness : '--'}" />
+	        </p:column>
+	        <p:column headerText="Places Economique">
+	            <h:outputText value="#{not empty avion and avion.classeEconomique ? avion.nombrePlaceEconomique : '--'}" />
+	        </p:column>
+	        <p:column headerText="Compagnie">
+	            <h:outputText value="#{avion.compagnie.libelle} (#{avion.compagnie.code})" />
+	        </p:column>
+		</p:dataTable>
+	</h:form>
+    <p:dialog header="Ajouter Avion" widgetVar="insertDialogAvion" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+		  <h:form id="insert-form-avion">
+		  	<h:panelGrid columns="2" style="width: 450px;">						
+				<h:outputText value="Constructeur" />
+				<h:inputText value="#{volBean.selectedAvion.constructeur}" />
+						
+				<h:outputText value="Modèle" />
+				<h:inputText value="#{volBean.selectedAvion.modele}" />
+				
+				<h:outputText value="Classe Business" />
+				<p:selectBooleanCheckbox value="#{volBean.selectedAvion.classeBusiness}" />
+				
+				<h:outputText value="Nombre de places Business" />
+				<h:inputText value="#{volBean.selectedAvion.nombrePlaceBusiness}" />
+				
+				<h:outputText value="Classe Economique" />
+				<p:selectBooleanCheckbox value="#{volBean.selectedAvion.classeEconomique}" />
+				
+				<h:outputText value="Nombre de places Economique" />
+				<h:inputText value="#{volBean.selectedAvion.nombrePlaceEconomique}" />
+				
+				<h:outputText value="Compagnie"/>
+				<h:selectOneMenu id="compagnieId" value="#{volBean.selectedCompanyId}" required="true" style="width:250px">
+						<f:selectItem itemLabel="Sélectionner Compagnie" noSelectionOption="true" />
+						<f:selectItems value="#{volBean.compagnies}" var="compagnie" itemValue="#{compagnie.id}" itemLabel="#{compagnie.libelle} (#{compagnie.code})" />
+				</h:selectOneMenu>
+				
+				<p:commandButton action="#{volBean.doAddPlane}" onclick="PF('insertDialogAvion').hide();" value="Enregistrer" icon="ui-icon-disk" update=":tabview:form-avion:avionList" />
+				<p:commandButton value="Annuler" icon="ui-icon-disk" onclick="PF('insertDialogAvion').hide();" />
+			</h:panelGrid>
+		  </h:form>
+	</p:dialog>	
+	<p:dialog header="Modifier Avion" widgetVar="updateDialogAvion" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+		  <h:form id="update-form-avion">
+		  	<h:panelGrid columns="2" >						
+				<h:outputText value="Constructeur" />
+				<h:inputText value="#{volBean.selectedAvion.constructeur}" />
+						
+				<h:outputText value="Modèle" />
+				<h:inputText value="#{volBean.selectedAvion.modele}" />
+				
+				<h:outputText value="Classe Business" />
+				<p:selectBooleanCheckbox value="#{volBean.selectedAvion.classeBusiness}" />
+				
+				<h:outputText value="Nombre de places Business" />
+				<h:inputText value="#{volBean.selectedAvion.nombrePlaceBusiness}" />
+				
+				<h:outputText value="Classe Economique" />
+				<p:selectBooleanCheckbox value="#{volBean.selectedAvion.classeEconomique}" />
+				
+				<h:outputText value="Nombre de places Economique" />
+				<h:inputText value="#{volBean.selectedAvion.nombrePlaceEconomique}" />
+				
+				<h:outputText value="Compagnie"/>
+				<h:selectOneMenu id="compagnieId" value="#{volBean.selectedCompanyId}" valueChangeListener="#{volBean.companyChangeListener}" required="true" style="width:250px">
+						<f:selectItem itemLabel="Sélectionner Compagnie" itemValue=""/>
+						<f:selectItems value="#{volBean.compagnies}" var="compagnie" itemValue="#{compagnie.id}" itemLabel="#{compagnie.libelle} (#{compagnie.code})" />
+						<p:ajax event="change" />
+				</h:selectOneMenu>
+				
+				<p:commandButton action="#{volBean.doUpdatePlane()}" onclick="PF('updateDialogAvion').hide();" value="Enregistrer" icon="ui-icon-disk" update=":tabview:form-avion:avionList" />
+				<p:commandButton value="Annuler" icon="ui-icon-disk" onclick="PF('updateDialogAvion').hide();" />
+			</h:panelGrid>
+		  </h:form>
+	</p:dialog>	
+	<p:dialog id='delete-dialog-avion' widgetVar="deleteDialogAvion" header="Confirmation" modal="true" resizable="false">
+            <h:panelGrid columns="3">
+                <h:outputText value="Voulez vous vraiment continuer ?" />
+                <h:outputLabel />
+                <h:outputLabel />
+                <p:commandButton action="#{volBean.doDeletePlane}" onclick="PF('deleteDialogAvion').hide()" value="Oui" icon="ui-icon-check" update=":tabview:form-avion:avionList"  />
+                <p:commandButton value="Non" type="button" icon="ui-icon-close" onclick="PF('deleteDialogAvion').hide()"/>
+            </h:panelGrid>
+        </p:dialog>
+</ui:composition>

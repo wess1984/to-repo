@@ -3,30 +3,39 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
-	<ui:define name="entete">Vols</ui:define>
-	<ui:define name="pageTitle">Vols</ui:define>
+	<ui:define name="entete">Gestion des vols</ui:define>
+	<ui:define name="pageTitle">Gestion des vols</ui:define>
 	<ui:define name="pageHeader">
 		<h:form id="form-header">
-			<h3>Vols</h3>
+			<h3>Gestion des vols</h3>
 		</h:form>			
 	</ui:define>
 	
 	<ui:define name="pageContent">
 	
 	<p:tabView id="tabview">
-	
-        <p:tab id="produitTab" title="Produits">
-            <h:panelGrid columns="2" cellpadding="10">
-                <ui:include src="vol/produit.xhtml" />
-            </h:panelGrid>
-        </p:tab>
-       
-         <p:tab id="companyTab" title="Compagnies">
+		<p:tab id="companyTab" title="Compagnies">
          	<h:panelGrid columns="2" cellpadding="10">
                 <ui:include src="vol/compagnie.xhtml" />
             </h:panelGrid>
          </p:tab>
-         <p:tab id="avionTab" title="Avions"></p:tab>
+       <p:tab id="avionTab" title="Avions">
+       		<h:panelGrid columns="2" cellpadding="10">
+                <ui:include src="vol/avion.xhtml" />
+            </h:panelGrid>
+       </p:tab>
+       <p:tab id="produitTab" title="Vols">
+            <h:panelGrid columns="2" cellpadding="10">
+                <ui:include src="vol/produit.xhtml" />
+            </h:panelGrid>
+        </p:tab>
+       <p:tab id="placeTab" title="Places">
+       		<h:panelGrid columns="2" cellpadding="10">
+                <ui:include src="vol/place.xhtml" />
+            </h:panelGrid>
+       </p:tab>
+         
+         
          
         </p:tabView>
 		

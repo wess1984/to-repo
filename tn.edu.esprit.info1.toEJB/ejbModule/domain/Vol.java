@@ -3,10 +3,13 @@ package domain;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+
+import utils.TypePlace;
 
 /**
  * Entity implementation class for Entity: Vol
@@ -22,11 +25,16 @@ public class Vol extends Produit implements Serializable {
 	private Date dateArrivee;
 	private Avion avion;
 	private List<Place> places;
+	private List<Place> econmiqueDisponibles = null;
+	private List<Place> businessDisponibles =null;
 	
 	private static final long serialVersionUID = 1L;
 
 	public Vol() {
 		super();
+		this.places = new ArrayList<>();
+		this.econmiqueDisponibles = new ArrayList<>();
+		this.businessDisponibles = new ArrayList<>();
 	}   
 	
 	
@@ -62,7 +70,7 @@ public class Vol extends Produit implements Serializable {
 		this.avion = avion;
 	}
 
-	@OneToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
+	@OneToMany(fetch = FetchType.EAGER, cascade={CascadeType.ALL})
 	public List<Place> getPlaces() {
 		return places;
 	}
@@ -116,6 +124,41 @@ public class Vol extends Produit implements Serializable {
 		this.dateArrivee = dateArrivee;
 	}
 
+	@Transient
+	public List<Place> getEconmiqueDisponibles() {
+		if(places!=null){
+			for (Place place : places) {
+				if(!place.getEstReserve() && place.getType().equals(TypePlace.Economique))
+					econmiqueDisponibles.add(place);
+			}
+		}
+		return econmiqueDisponibles;
+	}
 
+
+	public void setEconmiqueDisponibles(List<Place> econmiqueDisponibles) {
+		this.econmiqueDisponibles = econmiqueDisponibles;
+	}
+
+	@Transient
+	public List<Place> getBusinessDisponibles() {
+		if(places!=null){
+			for (Place place : places) {
+				if(!place.getEstReserve() && place.getType().equals(TypePlace.Business))
+					businessDisponibles.add(place);
+			}
+		}
+		return businessDisponibles;
+	}
+
+
+	public void setBusinessDisponibles(List<Place> businessDisponibles) {
+		this.businessDisponibles = businessDisponibles;
+	}
+
+
+	
+
+	
 	
 }

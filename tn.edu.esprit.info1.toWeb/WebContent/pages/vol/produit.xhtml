@@ -3,7 +3,8 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
+    xmlns:p="http://primefaces.org/ui"
+                      xmlns:c="http://java.sun.com/jsp/jstl/core">
     
     <h:form id="form">    	    	
     	<p:dataTable id="volList" var="vol" selectionMode="single" value="#{volBean.vols}" selection="#{volBean.selectedVol}" rowKey="#{vol.id}">
@@ -45,8 +46,9 @@
 	            <h:outputText value="#{vol.avion.constructeur} #{vol.avion.modele}" />
 	        </p:column>
 	        <p:column headerText="Places">
-					<h:outputText value="Business : #{vol.avion.nombrePlaceBusiness}" /><br />
-					<h:outputText value="Economique : #{vol.avion.nombrePlaceEconomique}" />
+					<h:outputText value="Business : #{vol.businessDisponibles.size()}" /><br />
+					<h:outputText value="Economique : #{vol.econmiqueDisponibles.size()}" >
+					</h:outputText>
 			</p:column>
 		</p:dataTable>
 	</h:form>
@@ -89,8 +91,18 @@
 						<f:selectItem itemLabel="" itemValue=""/>
 						<f:selectItems value="#{volBean.avions}" var="avion" itemValue="#{avion.id}" itemLabel="#{avion.constructeur} #{avion.modele}" />
 				</h:selectOneMenu>	
-						
-				<p:commandButton action="#{volBean.doAddVol}" onclick="PF('insertDialog').hide();" value="Enregistrer" icon="ui-icon-disk" update=":tabview:form:volList" />
+				
+				<h:outputText value="Prix Place (en D.T)" style="margin-right: 15px;"/>
+				<p:columnGroup id="placesId">
+					<h:outputLabel value="Place normal" />
+					<h:inputText value="#{volBean.prixPlaceEcoNormal}" style="width: 120px;" />
+					<h:outputLabel value="Place prêt du fenêtre" />
+					<h:inputText value="#{volBean.prixPlaceEcoFenetre}"  style="width: 120px;" />
+					<h:outputLabel value="Place Business" />
+					<h:inputText value="#{volBean.prixPlaceBusiness}"  style="width: 120px;" />
+				</p:columnGroup>
+				
+				<p:commandButton action="#{volBean.doAddVol}" onclick="PF('insertDialog').hide();" value="Enregistrer" icon="ui-icon-disk" update=":tabview:form:volList, :tabview:form-place:placeList" />
 				<p:commandButton value="Annuler" icon="ui-icon-disk" onclick="PF('insertDialog').hide();" />
 			</h:panelGrid>
 		  </h:form>
@@ -134,7 +146,6 @@
 				<h:selectOneMenu id="AvionId" value="#{volBean.selectedAvionId}" valueChangeListener="#{volBean.avionChangeListener}" style="width:250px">
 						<f:selectItem itemLabel="Sélectionner Avion" noSelectionOption="true" />
 						<f:selectItems value="#{volBean.avions}" var="avion" itemValue="#{avion.id}" itemLabel="#{avion.constructeur} #{avion.modele}" />
-						<p:ajax event="change" />
 				</h:selectOneMenu>	
 						
 				<p:commandButton action="#{volBean.doUpdateVol}" onclick="PF('updateDialog').hide();" value="Enregistrer" icon="ui-icon-disk" update=":tabview:form:volList" />

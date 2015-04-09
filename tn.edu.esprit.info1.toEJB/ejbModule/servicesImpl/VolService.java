@@ -172,6 +172,108 @@ public class VolService implements VolServiceRemote, VolServiceLocal {
 		return entityManager.find(Compagnie.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Avion> getAvions() {
+		return entityManager.createQuery("SELECT av from Avion av").getResultList();
+	}
+	
+	@Override
+	public Place findPlaceById(Integer id) {
+		return entityManager.find(Place.class, id);
+	}
+
+
+	@Override
+	public Boolean addPlane(Avion avion) {
+		Boolean state = false;
+		try {
+			entityManager.persist(avion);
+			state= true;
+		}catch(Exception e){
+			System.err.println(e);
+			System.err.println("Error on addPlane action ...");
+		}
+		
+		return state;
+	}
+
+	@Override
+	public Boolean updatePlane(Avion avion) {
+		Boolean state= false;
+		try{
+			entityManager.merge(avion);
+			state = true;
+		}catch(Exception e){
+			System.err.println(e);
+			System.err.println("Error on updatePlane action ...");
+		}
+		return state;
+	}
+
+	@Override
+	public Boolean deletePlane(Avion avion) {
+		Boolean state= false;
+		try{
+			entityManager.remove(this.findAvionById(avion.getId()));
+			state = true;
+		}catch(Exception e){
+			System.err.println(e);
+			System.err.println("Error on deletePlane action ...");
+		}
+		
+		return state;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Place> getPlaces() {
+		return entityManager.createQuery("SELECT p from Place p").getResultList();
+	}
+
+	@Override
+	public Boolean addPlace(Place place) {
+		Boolean state = false;
+		try {
+			entityManager.persist(place);
+			state= true;
+		}catch(Exception e){
+			System.err.println(e);
+			System.err.println("Error on addPlace action ...");
+		}
+		
+		return state;
+	}
+
+	@Override
+	public Boolean updatePlace(Place place) {
+		Boolean state = false;
+		try {
+			entityManager.merge(place);
+			state= true;
+		}catch(Exception e){
+			System.err.println(e);
+			System.err.println("Error on updatePlace action ...");
+		}
+		
+		return state;
+	}
+
+	@Override
+	public Boolean deletePlace(Place place) {
+		Boolean state = false;
+		try {
+			entityManager.remove(this.findPlaceById(place.getId()));
+			state= true;
+		}catch(Exception e){
+			System.err.println(e);
+			System.err.println("Error on deletePlace action ...");
+		}
+		
+		return state;
+	}
+
+	
 	
 
 }
