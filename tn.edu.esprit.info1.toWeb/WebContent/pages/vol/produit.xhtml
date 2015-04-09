@@ -7,11 +7,13 @@
                       xmlns:c="http://java.sun.com/jsp/jstl/core">
     
     <h:form id="form">    	    	
-    	<p:dataTable id="volList" var="vol" selectionMode="single" value="#{volBean.vols}" selection="#{volBean.selectedVol}" rowKey="#{vol.id}">
+    	<p:dataTable id="volList" var="vol" selectionMode="single" value="#{volBean.vols}" selection="#{volBean.selectedVol}" rowKey="#{vol.id}" rows="10" lazy="true" paginator="true" paginatorPosition="bottom"
+	    	paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
+	    	<p:ajax event="rowSelect" listener="#{volBean.onVolRowSelect}" update=":tabview:form-place:placeList" />
 	    	<f:facet name="header">
 	            <p:toolbar>
 					<f:facet name="right">		
-						<p:commandButton process="volList" update=":tabview:insert-form"  value="Ajouter"  icon="ui-icon-plus" oncomplete="PF('insertDialog').show()" actionListener="#{volBean.resetFormListener}" />	
+						<p:commandButton process="volList" update=":tabview:insert-form"  value="Ajouter"  icon="ui-icon-plus" oncomplete="PF('insertDialog').show()" actionListener="#{volBean.resetVolFormListener()}" />	
 						<p:commandButton process="volList" update=":tabview:update-form"  value="Modifier" icon="ui-icon-pencil"  oncomplete="PF('updateDialog').show()" />
 						
 						<p:commandButton process="volList" update=":tabview:form:volList" value="Supprimer" icon="ui-icon-close" oncomplete="PF('deleteDialog').show()" />
@@ -102,7 +104,9 @@
 					<h:inputText value="#{volBean.prixPlaceBusiness}"  style="width: 120px;" />
 				</p:columnGroup>
 				
-				<p:commandButton action="#{volBean.doAddVol}" onclick="PF('insertDialog').hide();" value="Enregistrer" icon="ui-icon-disk" update=":tabview:form:volList, :tabview:form-place:placeList" />
+				<p:commandButton action="#{volBean.doAddVol}" onclick="PF('insertDialog').hide();" value="Enregistrer" icon="ui-icon-disk" update=":tabview:form:volList, :tabview:form-place:placeList">
+				
+				</p:commandButton>
 				<p:commandButton value="Annuler" icon="ui-icon-disk" onclick="PF('insertDialog').hide();" />
 			</h:panelGrid>
 		  </h:form>

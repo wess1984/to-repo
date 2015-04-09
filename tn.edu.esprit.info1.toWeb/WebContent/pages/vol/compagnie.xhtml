@@ -7,11 +7,13 @@
     xmlns:p="http://primefaces.org/ui">
     
     <h:form id="form-compagnie">    	    	
-    	<p:dataTable id="compagnieList" var="company" selectionMode="single" value="#{volBean.compagnies}" selection="#{volBean.selectedCompany}" rowKey="#{company.id}">
+    	<p:dataTable id="compagnieList" var="company" selectionMode="single" value="#{volBean.compagnies}" selection="#{volBean.selectedCompany}" rowKey="#{company.id}" rows="10" lazy="true" paginator="true" paginatorPosition="bottom"
+	    	paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
+	    	<p:ajax event="rowSelect" listener="#{volBean.onCompanyRowSelect}" update=":tabview" />
 	    	<f:facet name="header">
 	            <p:toolbar>
 					<f:facet name="right">		
-						<p:commandButton process="compagnieList" update=":tabview:insert-form-compagnie"  value="Ajouter"  icon="ui-icon-plus" oncomplete="PF('insertDialogCompagnie').show()" actionListener="#{volBean.resetFormListener}" />	
+						<p:commandButton process="compagnieList" update=":tabview:insert-form-compagnie"  value="Ajouter"  icon="ui-icon-plus" oncomplete="PF('insertDialogCompagnie').show()" actionListener="#{volBean.resetCompanyFormListener}" />	
 						<p:commandButton process="compagnieList" update=":tabview:update-form-compagnie"  value="Modifier" icon="ui-icon-pencil"  oncomplete="PF('updateDialogCompagnie').show()" />
 						<p:commandButton process="compagnieList" update=":tabview:form-compagnie:compagnieList" value="Supprimer" icon="ui-icon-close" oncomplete="PF('deleteDialogCompagnie').show()" />
 				</f:facet>

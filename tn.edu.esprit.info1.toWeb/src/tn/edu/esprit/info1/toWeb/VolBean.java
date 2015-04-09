@@ -10,6 +10,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
+import org.primefaces.event.SelectEvent;
+import org.primefaces.context.RequestContext;
+
 import services.interfaces.VolServiceLocal;
 import utils.Emplacement;
 import utils.TypePlace;
@@ -68,8 +71,14 @@ public class VolBean implements Serializable{
 	}
 
 	public List<Vol> getVols() {
-		vols = serviceLocal.getVols();
-		
+		// get vols by selected company
+		if(getSelectedCompany().getId()!=null){
+			vols = serviceLocal.findVolsByCompany(getSelectedCompany().getId());
+		}
+		//get vols by selected plane
+		if(getSelectedAvion().getId()!=null){
+			vols = serviceLocal.findVolsByAvion(getSelectedAvion().getId());
+		}
 		return vols;
 	}
 
@@ -97,7 +106,8 @@ public class VolBean implements Serializable{
 
 	public List<Avion> getAvions() {
 		
-		avions = serviceLocal.getAvions();
+		if(getSelectedCompany().getId()!=null)
+			avions = serviceLocal.findAvionsByCompany(getSelectedCompany().getId());
 		
 		if(getSelectedCompanyId()!=null && getSelectedCompanyId()!="")
 			avions = serviceLocal.findAvionsByCompany(Integer.parseInt(getSelectedCompanyId()));
@@ -152,8 +162,12 @@ public class VolBean implements Serializable{
 	}
 
 	public List<Place> getPlaces() {
-		places = serviceLocal.getPlaces();
 		
+		if(getSelectedVol().getId()!=null){
+			places = getSelectedVol().getPlaces();
+		}else{
+			places= null;
+		}
 		return places;
 	}
 	
@@ -234,13 +248,13 @@ public class VolBean implements Serializable{
 	public String doAddVol(){
 		List<Place> places = new ArrayList<>();
 		Aeroport depart = serviceLocal.findAeroportById(Integer.parseInt(getSelectedAeroportDepartId()));
-		selectedVol.setDepart(depart);
+		getSelectedVol().setDepart(depart);
 		
 		Aeroport arrivee = serviceLocal.findAeroportById(Integer.parseInt(getSelectedAeroportArriveeId()));
-		selectedVol.setArrivee(arrivee);
+		getSelectedVol().setArrivee(arrivee);
 		
 		Avion selectedAvion = serviceLocal.findAvionById(Integer.parseInt(getSelectedAvionId()));
-		selectedVol.setAvion(selectedAvion);
+		getSelectedVol().setAvion(selectedAvion);
 		
 		Float prixPlaceNormal = 0.0f,prixPlaceFenetre=0.0f,prixPlaceBusi=0.0f;
 		if(prixPlaceEcoNormal!=null) prixPlaceNormal = Float.parseFloat(prixPlaceEcoNormal);
@@ -261,59 +275,56 @@ public class VolBean implements Serializable{
 			places.add(new Place("PB", TypePlace.Business, Emplacement.Fenetre, false, prixPlaceBusi, 0.0f));
 		}
 		
-		selectedVol.setPlaces(places);
+		getSelectedVol().setPlaces(places);
 		
-		serviceLocal.addVol(selectedVol);
+		serviceLocal.addVol(getSelectedVol());
 		
 		return "";
 	}
 
 	public String doUpdateVol(){
 		Aeroport depart = serviceLocal.findAeroportById(Integer.parseInt(getSelectedAeroportDepartId()));
-		selectedVol.setDepart(depart);
+		getSelectedVol().setDepart(depart);
 		
 		Aeroport arrivee = serviceLocal.findAeroportById(Integer.parseInt(getSelectedAeroportArriveeId()));
-		selectedVol.setArrivee(arrivee);
+		getSelectedVol().setArrivee(arrivee);
 		
 		Avion selectedAvion = serviceLocal.findAvionById(Integer.parseInt(getSelectedAvionId()));
-		selectedVol.setAvion(selectedAvion);
+		getSelectedVol().setAvion(selectedAvion);
 		
-		serviceLocal.updateVol(selectedVol);
+		serviceLocal.updateVol(getSelectedVol());
 		
 		return "";
 	}
 	
 	public String doDeleteVol(){
-		serviceLocal.deleteVol(selectedVol);
+		serviceLocal.deleteVol(getSelectedVol());
 		return "";
 	}
 	
 	public String doAddCompany(){
-		serviceLocal.addCompany(selectedCompany);
+		serviceLocal.addCompany(getSelectedCompany());
 		return "";
 	}
 	
 	public String doUpdateCompany(){
-		serviceLocal.updateCompany(selectedCompany);
+		serviceLocal.updateCompany(getSelectedCompany());
 		return "";
 	}
 	
 	public String doDeleteCompany(){
-		serviceLocal.deleteCompany(selectedCompany);
+		serviceLocal.deleteCompany(getSelectedCompany());
 		return "";
 	}
 	
 	public String doAddPlane(){
 		Compagnie compagnie = null;
 		
-		if(selectedCompanyId.trim()!=null) compagnie = serviceLocal.findCompanyById(Integer.parseInt(selectedCompanyId));
+		if(getSelectedCompanyId().trim()!=null) compagnie = serviceLocal.findCompanyById(Integer.parseInt(getSelectedCompanyId()));
 		
-		if(compagnie!=null) selectedAvion.setCompagnie(compagnie);
+		if(compagnie!=null) getSelectedAvion().setCompagnie(compagnie);
 		
-		serviceLocal.addPlane(selectedAvion);
-		
-		setSelectedAvion(null);
-		setSelectedCompanyId(null);
+		serviceLocal.addPlane(getSelectedAvion());
 		
 		return "";
 	}
@@ -323,38 +334,32 @@ public class VolBean implements Serializable{
 		
 		if(getSelectedCompanyId().trim()!=null) compagnie = serviceLocal.findCompanyById(Integer.parseInt(getSelectedCompanyId()));
 
-		if(compagnie!=null) selectedAvion.setCompagnie(compagnie);
+		if(compagnie!=null) getSelectedAvion().setCompagnie(compagnie);
 		
-		serviceLocal.updatePlane(selectedAvion);
-		
-		setSelectedAvion(null);
-		setSelectedCompanyId(null);
+		serviceLocal.updatePlane(getSelectedAvion());
 		
 		return "";
 	}
 	
 	public String doDeletePlane(){
-		serviceLocal.deletePlane(selectedAvion);
-		
-		setSelectedAvion(null);
-		setSelectedCompanyId(null);
+		serviceLocal.deletePlane(getSelectedAvion());
 		
 		return "";
 	}
 	
 	public String doAddPlace(){
 		
-		serviceLocal.addPlace(selectedPlace);
+		serviceLocal.addPlace(getSelectedPlace());
 		return "";
 	}
 	
 	public String doUpdatePlace(){
-		serviceLocal.updatePlace(selectedPlace);
+		serviceLocal.updatePlace(getSelectedPlace());
 		return "";
 	}
 	
 	public String doDeletePlace(){
-		serviceLocal.deletePlace(selectedPlace);
+		serviceLocal.deletePlace(getSelectedPlace());
 		return "";
 	}
 	
@@ -362,36 +367,64 @@ public class VolBean implements Serializable{
 	 public void companyChangeListener(ValueChangeEvent event) {
 	        if (event.getNewValue() != getSelectedCompanyId()) {
 	            setSelectedAvionId(null);
+	            setSelectedAvion(null);
 	            setSelectedCompanyId(event.getNewValue().toString());
 	        }
 	 }
 	 
 	 public void avionChangeListener(ValueChangeEvent event) {
-	        if (event.getNewValue() != getSelectedAvionId()) {
+		 Avion avion;   
+		 if (event.getNewValue() != getSelectedAvionId()) {
 	            setSelectedAvionId(event.getNewValue().toString());
-	            selectedVol.setAvion(serviceLocal.findAvionById(Integer.parseInt(getSelectedAvionId())));
+	            avion = serviceLocal.findAvionById(Integer.parseInt(getSelectedAvionId()));
+	            getSelectedVol().setAvion(avion);
 	        }
 	 }
 	 
 	 public void departAeroportChangeListener(ValueChangeEvent event) {
 	        if (event.getNewValue() != getSelectedAeroportDepartId()) {
 	            setSelectedAeroportDepartId(event.getNewValue().toString());
-	            selectedVol.setDepart(serviceLocal.findAeroportById(Integer.parseInt(getSelectedAeroportDepartId())));
+	            getSelectedVol().setDepart(serviceLocal.findAeroportById(Integer.parseInt(getSelectedAeroportDepartId())));
 	        }
 	 }
 	 
 	 public void typePlaceChangeListener(ValueChangeEvent event){
 		 if ((event.getNewValue() != getSelectedPlace().getType()) && event.getNewValue().equals(TypePlace.Business)){ 
-			selectedPlace.setType(TypePlace.Business);
+			getSelectedPlace().setType(TypePlace.Business);
 		 }else{
-			 selectedPlace.setType(TypePlace.Economique);
+			 getSelectedPlace().setType(TypePlace.Economique);
 		 }
 	 }
 	 
 
-	 public void resetFormListener() {
-		// reset the view map 
-		FacesContext.getCurrentInstance().getViewRoot().getViewMap().clear();
+	 public void resetCompanyFormListener() {
+		 //setSelectedCompany(new Compagnie());
 	 }
-
+	 public void resetAvionFormListener() {
+		 //setSelectedAvion(new Avion());
+	 }
+	 public void resetVolFormListener() {
+		 //setSelectedVol(new Vol());
+	 }
+	 
+	 public void onCompanyRowSelect(SelectEvent event) {
+		 Compagnie compagnie = (Compagnie) event.getObject();
+		 setSelectedCompany(compagnie);
+		 setSelectedCompanyId(compagnie.getId().toString());
+		 setSelectedAvion(null);
+		 setSelectedVol(null);
+		 setPlaces(null);
+	 }
+	 public void onPlaneRowSelect(SelectEvent event) {
+		 Avion avion = (Avion) event.getObject();
+		 setSelectedAvion(avion);
+		 setSelectedAvionId(avion.getId().toString());
+		 setSelectedVol(null);
+		 setPlaces(null);
+	 }
+	 public void onVolRowSelect(SelectEvent event) {
+		 Vol vol = (Vol) event.getObject();
+		 setSelectedVol(vol);
+	 }
+	 
 }

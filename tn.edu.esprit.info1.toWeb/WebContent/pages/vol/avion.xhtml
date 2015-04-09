@@ -6,14 +6,16 @@
     xmlns:p="http://primefaces.org/ui">
     
     <h:form id="form-avion">    	    	
-    	<p:dataTable id="avionList" var="avion" selectionMode="single" value="#{volBean.avions}" selection="#{volBean.selectedAvion}" rowKey="#{avion.id}">
+    	<p:dataTable id="avionList" var="avion" selectionMode="single" value="#{volBean.avions}" selection="#{volBean.selectedAvion}" rowKey="#{avion.id}" rows="10" lazy="true" paginator="true" paginatorPosition="bottom"
+	    	paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
+	    	<p:ajax event="rowSelect" listener="#{volBean.onPlaneRowSelect}" update=":tabview:form:volList, :tabview:form-place:placeList" />
 	    	<f:facet name="header">
 	            <p:toolbar>
 					<f:facet name="right">		
-						<p:commandButton process="avionList" update=":tabview:insert-form-avion"  value="Ajouter"  icon="ui-icon-plus" oncomplete="PF('insertDialogAvion').show()" actionListener="#{volBean.resetFormListener}" />	
+						<p:commandButton process="avionList" update=":tabview:insert-form-avion"  value="Ajouter"  icon="ui-icon-plus" oncomplete="PF('insertDialogAvion').show()" actionListener="#{volBean.resetAvionFormListener}" />	
 						<p:commandButton process="avionList" update=":tabview:update-form-avion"  value="Modifier" icon="ui-icon-pencil"  oncomplete="PF('updateDialogAvion').show()" />
 						<p:commandButton process="avionList" value="Supprimer" icon="ui-icon-close" oncomplete="PF('deleteDialogAvion').show()" />
-				</f:facet>
+					</f:facet>
 				</p:toolbar>
 	        </f:facet>
 	    	<p:column headerText="ID" style="width:6px;">
@@ -36,7 +38,7 @@
 	        </p:column>
 		</p:dataTable>
 	</h:form>
-    <p:dialog header="Ajouter Avion" widgetVar="insertDialogAvion" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+    <p:dialog header="Ajouter Avion" widgetVar="insertDialogAvion" modal="true" showEffect="fade" hideEffect="fade" resizable="false" dynamic="true">
 		  <h:form id="insert-form-avion">
 		  	<h:panelGrid columns="2" style="width: 450px;">						
 				<h:outputText value="Constructeur" />

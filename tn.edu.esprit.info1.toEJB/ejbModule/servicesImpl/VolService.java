@@ -273,6 +273,23 @@ public class VolService implements VolServiceRemote, VolServiceLocal {
 		return state;
 	}
 
+	@Override
+	public List<Vol> findVolsByCompany(Integer id) {
+		TypedQuery<Vol> query = entityManager.createQuery("SELECT v from Vol v WHERE v.avion.compagnie.id=:inputCode",Vol.class);
+		query.setParameter("inputCode", id);
+		
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<Vol> findVolsByAvion(Integer id) {
+		TypedQuery<Vol> query = entityManager.createQuery("SELECT v from Vol v WHERE v.avion.id=:inputCode",Vol.class);
+		query.setParameter("inputCode", id);
+		
+		return query.getResultList();
+	}
+
+	
 	
 	
 

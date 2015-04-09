@@ -6,7 +6,8 @@
     xmlns:p="http://primefaces.org/ui">
     
     <h:form id="form-place">    	    	
-    	<p:dataTable id="placeList" var="place" selectionMode="single" value="#{volBean.places}" selection="#{volBean.selectedPlace}" rowKey="#{place.id}">
+    	<p:dataTable id="placeList" var="place" selectionMode="single" value="#{volBean.places}" selection="#{volBean.selectedPlace}" rowKey="#{place.id}" rows="10" lazy="true" paginator="true" paginatorPosition="bottom"
+	    	paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}">
 	    	<f:facet name="header">
 	            <p:toolbar>
 					<f:facet name="right">		

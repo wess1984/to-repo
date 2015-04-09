@@ -36,6 +36,8 @@ public interface VolServiceLocal {
 	public List<Place> getPlaces();
 	
 	public List<Avion> findAvionsByCompany(Integer id);
+	public List<Vol> findVolsByCompany(Integer id);
+	public List<Vol> findVolsByAvion(Integer id);
 	public Aeroport findAeroportById(Integer id);
 	public Avion findAvionById(Integer id);
 	public Vol findVolById(Integer id);
