@@ -1,19 +1,21 @@
 package tn.edu.esprit.info1.toWeb;
 
 import java.io.Serializable;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
-import org.hibernate.validator.cfg.context.ReturnValueTarget;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 
 import services.interfaces.ChambreServiceLocal;
 import services.interfaces.HotelServiceLocal;
+import domain.CategorieChambre;
 import domain.CategorieChambreProduit;
 import domain.Hotel;
 
@@ -21,15 +23,23 @@ import domain.Hotel;
 @ViewScoped
 public class CategorieChambreBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@ManagedProperty("#{hotelBean}")
 	private HotelBean hotelBean;
 	
 	@EJB
 	HotelServiceLocal hotelServiceLocal;
-	
+	@EJB
+	ChambreServiceLocal chambreServiceLocal;
 	
 	private Hotel selectedHotel;
 	private List<CategorieChambreProduit> categorieChambreProduits;
+	private List<CategorieChambre> categorieChambreProduitsNotUsed;
+	
 	
 	public HotelBean getHotelBean() {
 		return hotelBean;
@@ -49,9 +59,8 @@ public class CategorieChambreBean implements Serializable {
 	}
 
 	public List<CategorieChambreProduit> getCategorieChambreProduits() {
-		
-		categorieChambreProduits= hotelServiceLocal.getCategoriesChambreByHotel(selectedHotel.getId());
-		
+				
+	    categorieChambreProduits= hotelServiceLocal.getCategoriesChambreByHotel(selectedHotel.getId());
 		return categorieChambreProduits;
 
 	}
@@ -60,5 +69,26 @@ public class CategorieChambreBean implements Serializable {
 		this.categorieChambreProduits = categorieChambreProduits;
 	}
 
+	public List<CategorieChambre> getCategorieChambreProduitsNotUsed() {	
+		categorieChambreProduitsNotUsed = chambreServiceLocal.getAllWhereCategNotInHotel(selectedHotel.getId());
+		return categorieChambreProduitsNotUsed;
+	}
 
+	public void setCategorieChambreProduitsNotUsed(List<CategorieChambre> categorieChambreProduitsNotUsed) {
+		this.categorieChambreProduitsNotUsed = categorieChambreProduitsNotUsed;
+	}
+
+	public void onCellEdit(CellEditEvent event) {
+		CategorieChambre oldValue = (CategorieChambre)event.getOldValue();
+		CategorieChambre newValue = (CategorieChambre)event.getNewValue();
+         System.out.println(oldValue.getLibelle());
+         System.out.println(newValue.getLibelle());
+        if(newValue != null && !newValue.equals(oldValue)) {
+        	FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue.getLibelle() + ", New:" + newValue.getLibelle());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            
+  
+        }
+    }
+	
 }

@@ -7,16 +7,32 @@
 
 	 <h:form id="test-form">
 		<h:outputText value="#{categorieChambreBean.selectedHotel.libelle}" />
-	</h:form>
+	<p:growl id="msgs" showDetail="true"/>
 
-	<p:dataTable var="ccp" value="#{categorieChambreBean.categorieChambreProduits}">
+
+	<p:dataTable var="ccp" value="#{categorieChambreBean.categorieChambreProduits}" editMode="cell" editable="true">
+		
+       
+		<p:ajax event="cellEdit" listener="#{categorieChambreBean.onCellEdit}" update=":tabview:test-form:msgs"/>
 	    <p:column headerText="Id" style="width:10px">
 	        <h:outputText value="#{ccp.categorieChambre.id}" />
 	    </p:column>
 	 
 	    <p:column headerText="Libellé">
-	        <h:outputText value="#{ccp.categorieChambre.libelle}" />
+	    	<p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{ccp.categorieChambre.libelle}" /></f:facet>
+               <f:facet name="input">
+                   <h:selectOneMenu value="#{ccp.categorieChambre}" style="width:100%">
+                       <f:selectItems  value="#{categorieChambreBean.categorieChambreProduitsNotUsed}" var="categ" itemLabel="#{categ.libelle}" itemValue="#{categ.id}" />
+                    
+                   </h:selectOneMenu>
+               </f:facet>
+            </p:cellEditor>
+	       
 	    </p:column>
+	    <p:column style="width:32px">
+           <p:rowEditor />
+       </p:column>
 	</p:dataTable>
-
+</h:form>
 </ui:composition>

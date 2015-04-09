@@ -8,8 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import domain.CategorieChambre;
-import domain.CategorieChambreProduit;
-import domain.Hotel;
 import services.interfaces.ChambreServiceLocal;
 
 /**
@@ -75,6 +73,17 @@ public class ChambreService implements ChambreServiceLocal {
 			System.err.println("delete errors ...");
 		}
 		return b;
+	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CategorieChambre> getAllWhereCategNotInHotel(Integer idprod) {
+		return entityManager.createQuery("SELECT C FROM CategorieChambre C WHERE C.id NOT IN "
+				+ "( SELECT CCP.categorieChambre.id FROM CategorieChambreProduit CCP WHERE CCP.produit.id = :id)")
+				.setParameter("id", idprod)
+				.getResultList();
+		
 	}
 
 }
