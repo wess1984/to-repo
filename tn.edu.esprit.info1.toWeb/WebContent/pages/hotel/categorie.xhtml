@@ -40,9 +40,9 @@
 	<p:dialog header="Catégorie de chambre" widgetVar="insertDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
 		<h:panelGrid columns="2">	
 			<h:outputText value="Stock" />
-			<h:inputText  value="#{hotelBean.categorieChambreProduit.stock}" style="width:30px"   />
+			<h:inputText  value="#{categorieChambreBean.categorieChambreProduit.stock}" style="width:30px"   />
 			<h:outputText value="Type de chambre" />
-			<h:inputText  value="#{categorieChambreBean.selectedHotel.code}" style="width:30px"   />
+			<h:inputText  value="#{categorieChambreBean.categorieChambreProduit.typeChambre}" style="width:30px"   />
 							
 		</h:panelGrid>			
 	</p:dialog>
