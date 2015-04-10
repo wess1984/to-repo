@@ -6,6 +6,21 @@
 <ui:define name="entete">INDEX</ui:define>
 	<ui:define name="pageTitle">INDEX</ui:define>
 	<ui:define name="pageContent">
-		HOME
+		<f:view>
+
+		<h:form>
+			<p:panel id="panel" header="login" toggleable="true">
+				<h:panelGrid columns="2">
+					<h:outputText value="login" />
+					<p:inputText value="#{loginBean.login}"></p:inputText>
+					<h:outputText value="password" />
+					<p:inputText value="#{loginBean.pwd}"></p:inputText>
+				</h:panelGrid>
+				<p:commandButton id="btn" value="sign in" update="panel"
+					action="#{loginBean.doLogin}" />
+			</p:panel>
+
+		</h:form>
+	</f:view>
 	</ui:define>
 </ui:composition>

@@ -16,6 +16,10 @@ import domain.Hotel;
 @ViewScoped
 public class HotelBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<Hotel> hotels;
 	private Hotel selectedHotel = new Hotel();
 	

@@ -78,4 +78,22 @@ public class HotelService implements HotelServiceLocal {
 				.setParameter("id", id).getResultList();
 	}
 
+	@Override
+	public Boolean addCategorieChambre(Hotel hotel,CategorieChambreProduit categorieChambreProduit) {
+
+		Boolean b = false;
+		try {
+			Hotel attachedHotel = entityManager.find(Hotel.class, hotel);
+			attachedHotel.getCategorieChambreProduits().add(categorieChambreProduit);
+			
+			entityManager.persist(attachedHotel);
+			b = true;
+		} catch (Exception e) {
+			System.out.println("insertion errors ...");
+		}
+		return b;
+	}
+
+	
+
 }

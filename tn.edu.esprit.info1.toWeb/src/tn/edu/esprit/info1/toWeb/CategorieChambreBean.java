@@ -11,7 +11,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.CellEditEvent;
-import org.primefaces.event.RowEditEvent;
+
 
 import services.interfaces.ChambreServiceLocal;
 import services.interfaces.HotelServiceLocal;
@@ -29,17 +29,17 @@ public class CategorieChambreBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@ManagedProperty("#{hotelBean}")
-	private HotelBean hotelBean;
-	
+	private HotelBean hotelBean;	
 	@EJB
 	HotelServiceLocal hotelServiceLocal;
 	@EJB
 	ChambreServiceLocal chambreServiceLocal;
 	
+	private CategorieChambreProduit categorieChambreProduit =new CategorieChambreProduit();
 	private Hotel selectedHotel;
 	private List<CategorieChambreProduit> categorieChambreProduits;
 	private List<CategorieChambre> categorieChambreProduitsNotUsed;
-	
+
 	
 	public HotelBean getHotelBean() {
 		return hotelBean;
@@ -90,5 +90,21 @@ public class CategorieChambreBean implements Serializable {
   
         }
     }
+	
+
+
+	public void doAddCategorieChambre(){
+		//hotelServiceLocal.addCategorieChambre(getSelectedHotel(), categorieChambreProduitObj);
+	}
+
+	public CategorieChambreProduit getCategorieChambreProduit() {
+		return categorieChambreProduit;
+	}
+
+	public void setCategorieChambreProduit(CategorieChambreProduit categorieChambreProduit) {
+		this.categorieChambreProduit = categorieChambreProduit;
+	}
+
+	
 	
 }

@@ -22,6 +22,18 @@ public class CategorieChambreProduit implements Serializable {
 	private Hotel produit;
 	private CategorieChambre categorieChambre;
 	
+	
+	public CategorieChambreProduit(
+			CategorieChambreProduitId categorieChambreProduitId,
+			String typeChambre, Integer stock, Hotel produit,
+			CategorieChambre categorieChambre) {
+		super();
+		this.categorieChambreProduitId = categorieChambreProduitId;
+		this.typeChambre = typeChambre;
+		this.stock = stock;
+		this.produit = produit;
+		this.categorieChambre = categorieChambre;
+	}
 	public CategorieChambreProduit() {
 		super();
 	}   

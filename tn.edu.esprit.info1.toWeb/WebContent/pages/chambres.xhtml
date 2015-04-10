@@ -12,10 +12,8 @@
 	</ui:define>
 	<ui:define name="pageContent">	
 		<h:form id="form">    	    	
-	    	<p:dataTable id="chambreList" var="chambre"  
-	    	rows="10" lazy="true" paginator="true" paginatorPosition="bottom"
-	    	paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-	    	selectionMode="single" value="#{chambreBean.categoriesChambre}" selection="#{chambreBean.selectedCategorieChambre}" rowKey="#{chambre.id}">
+	    	<p:dataTable id="chambreList" var="chambre"  stickyHeader="true"
+	   	    	selectionMode="single" value="#{chambreBean.categoriesChambre}" selection="#{chambreBean.selectedCategorieChambre}" rowKey="#{chambre.id}">
 		        <f:facet name="header">
 		            <p:toolbar>
 						<f:facet name="right">		

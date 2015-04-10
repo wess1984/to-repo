@@ -16,4 +16,5 @@ public interface HotelServiceLocal {
 	Boolean updateHotel(Hotel hotel);
 	Boolean deleteHote(Hotel hotel);
 	List<CategorieChambreProduit> getCategoriesChambreByHotel(Integer id);
+	Boolean addCategorieChambre(Hotel hotel,CategorieChambreProduit categorieChambreProduit);
 }
