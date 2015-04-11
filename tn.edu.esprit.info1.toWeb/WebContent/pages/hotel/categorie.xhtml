@@ -5,46 +5,48 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
 
-	 <h:form id="test-form">
+	 <h:form id="test-form">	 
 		<h:outputText value="#{categorieChambreBean.selectedHotel.libelle}" />
-	<p:growl id="msgs" showDetail="true"/>
-
-
-	<p:dataTable var="ccp" value="#{categorieChambreBean.categorieChambreProduits}" editMode="cell" editable="true">
+		<p:growl id="msgs" showDetail="true"/>
+		<p:dataTable id="ccp-datatable" var="ccp" value="#{categorieChambreBean.categorieChambreProduits}" editMode="cell" editable="true">	
+			<p:ajax event="cellEdit" listener="#{categorieChambreBean.onCellEdit}" update=":tabview:test-form:msgs"/>
+		    <p:column headerText="Id" style="width:10px">
+		        <h:outputText value="#{ccp.categorieChambre.id}" />
+		    </p:column>		 
+		    <p:column headerText="Libellé">
+		    	<p:cellEditor>
+	               <f:facet name="output"><h:outputText value="#{ccp.categorieChambre.libelle}" /></f:facet>
+	               <f:facet name="input">
+	                   <h:selectOneMenu value="#{ccp.categorieChambre}" style="width:100%">
+	                       <f:selectItems  value="#{categorieChambreBean.categorieChambreProduitsNotUsed}" var="categ" itemLabel="#{categ.libelle}" itemValue="#{categ.id}" />
+	                    
+	                   </h:selectOneMenu>
+	               </f:facet>
+	            </p:cellEditor>		       
+		    </p:column>
+		    <p:column style="width:32px" >
+			    <f:facet name="header">  
+	                    <p:commandButton icon="ui-icon ui-icon-plus" oncomplete="PF('insertDialogCateg').show()"  value="" style="width: 27px; height: 23px;"/>
+	          </f:facet>
+	           <p:rowEditor />
+	       </p:column>
+		</p:dataTable>
 		
-       
-		<p:ajax event="cellEdit" listener="#{categorieChambreBean.onCellEdit}" update=":tabview:test-form:msgs"/>
-	    <p:column headerText="Id" style="width:10px">
-	        <h:outputText value="#{ccp.categorieChambre.id}" />
-	    </p:column>
-	 
-	    <p:column headerText="Libellé">
-	    	<p:cellEditor>
-               <f:facet name="output"><h:outputText value="#{ccp.categorieChambre.libelle}" /></f:facet>
-               <f:facet name="input">
-                   <h:selectOneMenu value="#{ccp.categorieChambre}" style="width:100%">
-                       <f:selectItems  value="#{categorieChambreBean.categorieChambreProduitsNotUsed}" var="categ" itemLabel="#{categ.libelle}" itemValue="#{categ.id}" />
-                    
-                   </h:selectOneMenu>
-               </f:facet>
-            </p:cellEditor>
-	       
-	    </p:column>
-	    <p:column style="width:32px" >
-		    <f:facet name="header">  
-                    <p:commandButton icon="ui-icon ui-icon-plus" oncomplete="PF('insertDialog').show()"  value="" style="width: 27px; height: 23px;"/>
-          </f:facet>
-           <p:rowEditor />
-       </p:column>
-	</p:dataTable>
-	<p:dialog header="Catégorie de chambre" widgetVar="insertDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-		<h:panelGrid columns="2">	
-			<h:outputText value="Stock" />
-			<h:inputText  value="#{categorieChambreBean.categorieChambreProduit.stock}" style="width:30px"   />
-			<h:outputText value="Type de chambre" />
-			<h:inputText  value="#{categorieChambreBean.categorieChambreProduit.typeChambre}" style="width:30px"   />
-							
-		</h:panelGrid>			
-	</p:dialog>
-</h:form>
+	</h:form>
+	<p:dialog header="Catégorie de chambre" widgetVar="insertDialogCateg" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+			<h:form id="insert-form-categ">
+				<h:panelGrid columns="2">	
+					<h:outputText value="Stock" />
+					<h:inputText  value="#{categorieChambreBean.categorieChambreProduit.stock}" style="width:30px"   />
+					<h:outputText value="Type de chambre" />
+					<h:inputText  value="#{categorieChambreBean.categorieChambreProduit.typeChambre}" style="width:130px"   />
+					<h:outputText value="Catégorie de chambre" />
+					<h:selectOneMenu value="#{categorieChambreBean.categorieChambreProduit.categorieChambre}" style="width:100%">
+		               <f:selectItems  value="#{categorieChambreBean.categorieChambreProduitsNotUsed}" var="categ" itemLabel="#{categ.libelle}" itemValue="#{categ.id}" />
+		            </h:selectOneMenu>
+		            	
+		            <p:commandButton  action="#{categorieChambreBean.doAddCategorieChambre}"  value="Enregistrer" icon="ui-icon-disk" update=":tabview:test-form:ccp-datatable" />
+				</h:panelGrid>	
+			</h:form>		
+		</p:dialog>
 </ui:composition>
