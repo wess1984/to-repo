@@ -43,11 +43,17 @@ public class VolPopulator {
 		Aeroport depart  = entityManager.find(Aeroport.class, 1);
 		Aeroport arrivee = entityManager.find(Aeroport.class, 5);
 		
-		Vol vol = new Vol("TN001", depart, arrivee, new Date(), new Date(), avions.get(1),places);
+		Aeroport depart1  = entityManager.find(Aeroport.class, 2);
+		Aeroport arrivee1 = entityManager.find(Aeroport.class, 3);
 		
-		vol.setDesignation("Tunis -> Djerba");
-		vol.setPlaces(places);
+		Vol vol = new Vol("TN001", depart, arrivee, new Date(), new Date(), avions.get(1),places);
+		vol.setDesignation("Tunis Djerba");
 		entityManager.persist(vol);
+		places = new ArrayList<>();
+		initPlaces();
+		Vol vol1 = new Vol("TN002", depart1, arrivee1, new Date(), new Date(), avions.get(2),places);
+		vol1.setDesignation("Monastir Sousse");
+		entityManager.persist(vol1);
 	}
 
 	private void initAeroports() {
@@ -101,17 +107,17 @@ public class VolPopulator {
 	}
 	
 	private void initPlaces() {
-		Place place1 = new Place("A01", TypePlace.Business,Emplacement.Fenetre,false, 300.0F, 0.0F);
-		Place place2 = new Place("A02", TypePlace.Economique,Emplacement.Normal,false, 280.0F, 0.0F);
-		Place place3 = new Place("B01", TypePlace.Economique,Emplacement.Fenetre,false, 270.0F, 0.0F);
-		Place place4 = new Place("B02", TypePlace.Economique,Emplacement.Normal,false, 240.0F, 0.0F);
-		Place place5 = new Place("C01", TypePlace.Economique,Emplacement.Normal,false, 210.0F, 0.0F);
+		Place place1 = new Place("PB", TypePlace.Business,Emplacement.Fenetre,false, 300.0F, 0.0F);
+		Place place2 = new Place("PEN", TypePlace.Economique,Emplacement.Normal,false, 280.0F, 0.0F);
+		Place place3 = new Place("PEF", TypePlace.Economique,Emplacement.Fenetre,false, 270.0F, 0.0F);
+		Place place4 = new Place("PEN", TypePlace.Economique,Emplacement.Normal,false, 240.0F, 0.0F);
+		Place place5 = new Place("PEN", TypePlace.Economique,Emplacement.Normal,false, 210.0F, 0.0F);
 		
-		entityManager.persist(place1);
+		/*entityManager.persist(place1);
 		entityManager.persist(place2);
 		entityManager.persist(place3);
 		entityManager.persist(place4);
-		entityManager.persist(place5);
+		entityManager.persist(place5);*/
 		
 		places.add(place1);
 		places.add(place2);

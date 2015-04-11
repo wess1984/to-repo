@@ -2,7 +2,9 @@
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:p="http://primefaces.org/ui"
+                     xmlns:c="http://java.sun.com/jsp/jstl/core">
     
 <aside id="sidebar" class="column">
 <!--		<form class="quick_search">
@@ -11,18 +13,40 @@
 		<hr/>
 		<h3>Produits</h3>
 		<ul class="toggle">
-           <li class="icn_produit"><a href="#{request.contextPath}/pages/hotels.jsf">HOTELS</a></li>		  
-           <li class="icn_produit"><a href="#{request.contextPath}/pages/vols.jsf">VOLS</a></li>
+		<ui:param name="hotelLink" value="#{request.contextPath}/pages/hotels.jsf" />
+		<ui:param name="volLink" value="#{request.contextPath}/pages/vols.jsf" />
+		<ui:param name="error" value="PF('errorDialog').show()" />
+		
+        <li class="icn_produit"><a href="#{loginBean.loggedIn ? hotelLink : '#'}">HOTELS</a></li>		  
+        <li class="icn_produit"><a href="#{loginBean.loggedIn ? volLink : '#'}">VOLS</a></li>
 		</ul>
+		
 		<h3>Paramétres</h3>
 		<ul class="toggle">    
                         <li class="icn_images"><a href="#{request.contextPath}/pages/chambres.jsf">Catégorie de Chambre</a></li>
          </ul>		
-		<h3>Utilisateur</h3>
-                <ul class="toggle">                           
-                     <li class="icn_logout"><a href="#logout">Déconnexion</a></li>
-                </ul>	
-		
+         <c:choose>
+         <c:when test="#{loginBean.loggedIn}">
+			<h3>Utilisateur</h3>
+             <ul class="toggle">  
+             	<li class="icn_logout">
+	                   <h:form>
+							<h:commandLink value="Déconnexion" action="#{loginBean.logout}"/>
+					 </h:form>
+		 		</li>
+             </ul>	
+		 </c:when>
+		 <c:otherwise>
+			<script>
+				$(document).ready(function(){
+					$("#sidebar").remove();
+				});
+			</script>
+		 </c:otherwise>
+		 </c:choose>
+		 <p:dialog widgetVar="errorDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" dynamic="true">
+		 Veuillez vous connecter !
+		 </p:dialog>
 		<footer>
 			<hr />
 			<p><strong>Copyright  esprit 2015</strong></p>

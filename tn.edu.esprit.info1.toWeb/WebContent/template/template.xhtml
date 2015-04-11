@@ -3,7 +3,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
 	<title><ui:insert name="pageTitle" /></title>
 	<h:outputStylesheet library="css" name="application.css" />
@@ -19,7 +20,8 @@
 </h:head>
 <h:body>
 	<ui:include src="/WEB-INF/entete.xhtml" />
-	<ui:include src="/WEB-INF/left.xhtml" />
+	
+	<c:if test="#{loginBean.loggedIn}"><ui:include src="/WEB-INF/left.xhtml" /></c:if>
 		
 	
 	<section id="main" class="column" >  

@@ -2,25 +2,32 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 <ui:define name="entete">INDEX</ui:define>
 	<ui:define name="pageTitle">INDEX</ui:define>
 	<ui:define name="pageContent">
+	<c:if test="#{!loginBean.loggedIn}">
 		<f:view>
-
+		
 		<h:form>
-			<p:panel id="panel" header="login" toggleable="true">
+			<p:panel id="panel" header="login" style="margin: 100px auto; width: 314px;">
+				<c:if test="#{loginBean.error}">
+					<h:outputText style="font-size: 14px; font-weight: bold; color: #900;" value="Veuillez vérfier votre login et password !" />
+				</c:if>
 				<h:panelGrid columns="2">
 					<h:outputText value="login" />
 					<p:inputText value="#{loginBean.login}"></p:inputText>
 					<h:outputText value="password" />
 					<p:inputText value="#{loginBean.pwd}"></p:inputText>
 				</h:panelGrid>
-				<p:commandButton id="btn" value="sign in" update="panel"
-					action="#{loginBean.doLogin}" />
+				<p:commandButton id="btn" value="sign in" update="panel" action="#{loginBean.doLogin}" />
+				
 			</p:panel>
 
 		</h:form>
+		
 	</f:view>
+	</c:if>
 	</ui:define>
 </ui:composition>
