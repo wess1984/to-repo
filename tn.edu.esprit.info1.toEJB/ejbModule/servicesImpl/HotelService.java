@@ -80,13 +80,13 @@ public class HotelService implements HotelServiceLocal {
 
 	@Override
 	public Boolean addCategorieChambre(Hotel hotel,CategorieChambreProduit categorieChambreProduit) {
-
+System.out.println("add");
 		Boolean b = false;
 		try {
 			Hotel attachedHotel = entityManager.find(Hotel.class, hotel);
 			attachedHotel.getCategorieChambreProduits().add(categorieChambreProduit);
 			
-			entityManager.persist(attachedHotel);
+			entityManager.merge(attachedHotel);
 			b = true;
 		} catch (Exception e) {
 			System.out.println("insertion errors ...");

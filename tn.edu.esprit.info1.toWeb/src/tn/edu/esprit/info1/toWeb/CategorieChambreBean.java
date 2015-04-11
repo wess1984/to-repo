@@ -89,12 +89,11 @@ public class CategorieChambreBean implements Serializable {
             
   
         }
-    }
-	
-
+    }	
 
 	public void doAddCategorieChambre(){
-		//hotelServiceLocal.addCategorieChambre(getSelectedHotel(), categorieChambreProduitObj);
+		System.out.println("MyBean");
+		//hotelServiceLocal.addCategorieChambre(getSelectedHotel(), categorieChambreProduit);
 	}
 
 	public CategorieChambreProduit getCategorieChambreProduit() {
